@@ -5,7 +5,7 @@ namespace Game.Utility
 {
     public static class LoggerExtensions
     {
-        public static Logger Log(this UnityEngine.Object context) => new Logger(context);
+        public static Logger Log(this object context) => new Logger(context);
     }
 
     public class Logger
