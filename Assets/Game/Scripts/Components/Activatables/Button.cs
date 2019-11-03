@@ -29,13 +29,11 @@ public class Button : MonoBehaviour, IInteractable
         {
             isOpened.isOpen = isPressed;
             isPressed = false;
-            Debug.Log($"{gameObject.name} is opened");
         }
         else
         {
             isOpened.isOpen = !isPressed;
             isPressed = false;
-            Debug.Log($"{gameObject.name} is closed");
         }
     }
 }
