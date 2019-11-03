@@ -31,7 +31,10 @@ namespace Game.Components
             input.Player.Move.performed += ctx => playerInput = ctx.ReadValue<Vector2>();
             input.Player.Move.canceled  += _ => playerInput = Vector2.zero;
 
-            input.Player.ToggleWalkRun.performed += _ => humanoidMovement.SetWalking(isWalking = !isWalking);
+            input.Player.ToggleWalkRun.performed += _ => ToggleWalking();
+
+            input.Player.Sprint.started  += _ => StartSprinting();
+            input.Player.Sprint.canceled += _ => StopSprinting();
 
             SetMovementState(false);
             SwitchMovementMode(default);
@@ -74,6 +77,23 @@ namespace Game.Components
         private void SetMovementState(bool state)
         {
             humanoidMovement.enabled = false;
+        }
+
+        private void StartSprinting()
+        {
+            humanoidMovement.SetSprinting(true);
+        }
+
+        private void StopSprinting()
+        {
+            humanoidMovement.SetSprinting(false);
+        }
+
+        private void ToggleWalking()
+        {
+            isWalking = !isWalking;
+
+            humanoidMovement.SetWalking(isWalking);
         }
     }
 }

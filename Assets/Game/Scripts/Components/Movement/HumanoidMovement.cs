@@ -9,6 +9,7 @@ namespace Game.Components.Movement
     public class HumanoidMovement : MovementBase
     {
         [SerializeField] private Rigidbody characterBody;
+        [SerializeField] private float sprintMultiplier;
         [SerializeField] private float walkMultiplier;
         [SerializeField] private float movementSpeed;
         [SerializeField] private float acceleration;
@@ -16,6 +17,7 @@ namespace Game.Components.Movement
 
         private Vector2 movementInput;
         private bool walking;
+        private bool sprinting;
 
         private void OnDisable()
         {
@@ -70,10 +72,18 @@ namespace Game.Components.Movement
             walking = state;
         }
 
+        public void SetSprinting(bool state)
+        {
+            sprinting = state;
+        }
+
         private float MovementSpeed
         {
             get
             {
+                if (sprinting)
+                    return movementSpeed * sprintMultiplier;
+
                 if (walking)
                     return movementSpeed * walkMultiplier;
 
