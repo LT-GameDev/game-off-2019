@@ -1,4 +1,5 @@
-﻿using System;
+﻿#pragma warning disable 649
+
 using Game.Cameras;
 using UnityEngine;
 
@@ -26,13 +27,14 @@ namespace Game.Components.Movement
             if (groundVelocity.magnitude < 0.1f)
                 return;
             
-            var forward      = (playerTransform.position - playerCamera.Position).normalized;
-            var projected    = Vector3.Scale(groundPlane, forward);
+            var projected    = Vector3.Scale(groundPlane, Direction);
             var lookRotation = Quaternion.LookRotation(projected, playerTransform.up);
 
             var lerpedRotation = Quaternion.Lerp(characterBody.rotation, lookRotation, lookSpeed * Time.fixedDeltaTime);
 
             characterBody.rotation = lerpedRotation;
         }
+
+        public Vector3 Direction => (playerTransform.position - playerCamera.Position).normalized;
     }
 }

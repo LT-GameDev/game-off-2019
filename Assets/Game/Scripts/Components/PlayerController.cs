@@ -1,16 +1,16 @@
 ﻿#pragma warning disable 649
 
 using Game.Components.Movement;
-using System.Collections;
-using System.Collections.Generic;
+using Game.Components.Abilities;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 namespace Game.Components
 {
-    public class PlayerInputController : MonoBehaviour
+    public class PlayerController : MonoBehaviour
     {
         [SerializeField] private PlayerMovementController movementController;
+        [SerializeField] private FaceCameraDirection faceCameraDirection;
+        [SerializeField] private Dash dash;
 
         private PlayerInput input;
 
@@ -29,6 +29,8 @@ namespace Game.Components
             input.Player.Sprint.canceled += _ => movementController.StopSprinting();
 
             input.Player.Jump.performed += _ => movementController.Jump();
+
+            input.Player.Dash.performed += _ => Dash();
         }
 
         private void OnEnable()
@@ -44,6 +46,15 @@ namespace Game.Components
         private void OnDisable()
         {
             input.Player.Disable();
+        }
+
+        private void Dash()
+        {
+            if (dash.enabled)
+                return;
+            
+            movementController.enabled = false;
+            dash.Use(faceCameraDirection.Direction, () => movementController.enabled = true, null);
         }
     }
 }
