@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Game.Interactions;
 using UnityEngine;
 
-public class DoorOpener : MonoBehaviour, IInteractable
+public class DoorOpener : Activatable, IInteractable
 {
     public float smooth = 2f;
     public float doorOpenAngle = 90f;
@@ -17,9 +17,15 @@ public class DoorOpener : MonoBehaviour, IInteractable
             Debug.Log($"Press 'F' to open {gameObject.name}");
         }
     }
+    
     public void Interact()
     {
-        isOpen = !isOpen;
+        Activate(isOpen = !isOpen);
+    }
+
+    public override void Activate(bool state)
+    {
+        isOpen = state;
     }
 
     // Update is called once per frame
