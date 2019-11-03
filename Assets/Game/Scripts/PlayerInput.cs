@@ -58,6 +58,14 @@ namespace Game
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Interact"",
+                    ""type"": ""Button"",
+                    ""id"": ""a688a1f8-88b0-4087-a011-914fb5408053"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -159,6 +167,17 @@ namespace Game
                     ""action"": ""Dash"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e16809a2-5a76-4e6a-b3b9-591c764c7184"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Interact"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -189,6 +208,7 @@ namespace Game
             m_Player_Sprint = m_Player.FindAction("Sprint", throwIfNotFound: true);
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
+            m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
         }
 
         ~PlayerInput()
@@ -243,6 +263,7 @@ namespace Game
         private readonly InputAction m_Player_Sprint;
         private readonly InputAction m_Player_Jump;
         private readonly InputAction m_Player_Dash;
+        private readonly InputAction m_Player_Interact;
         public struct PlayerActions
         {
             private PlayerInput m_Wrapper;
@@ -252,6 +273,7 @@ namespace Game
             public InputAction @Sprint => m_Wrapper.m_Player_Sprint;
             public InputAction @Jump => m_Wrapper.m_Player_Jump;
             public InputAction @Dash => m_Wrapper.m_Player_Dash;
+            public InputAction @Interact => m_Wrapper.m_Player_Interact;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -276,6 +298,9 @@ namespace Game
                     Dash.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                     Dash.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
                     Dash.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnDash;
+                    Interact.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                    Interact.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
+                    Interact.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnInteract;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -295,6 +320,9 @@ namespace Game
                     Dash.started += instance.OnDash;
                     Dash.performed += instance.OnDash;
                     Dash.canceled += instance.OnDash;
+                    Interact.started += instance.OnInteract;
+                    Interact.performed += instance.OnInteract;
+                    Interact.canceled += instance.OnInteract;
                 }
             }
         }
@@ -315,6 +343,7 @@ namespace Game
             void OnSprint(InputAction.CallbackContext context);
             void OnJump(InputAction.CallbackContext context);
             void OnDash(InputAction.CallbackContext context);
+            void OnInteract(InputAction.CallbackContext context);
         }
     }
 }

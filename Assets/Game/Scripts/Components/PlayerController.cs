@@ -10,6 +10,9 @@ namespace Game.Components
     {
         [SerializeField] private PlayerMovementController movementController;
         [SerializeField] private FaceCameraDirection faceCameraDirection;
+        [SerializeField] private Interactor interactor;
+        
+        [Header("Abilities")]
         [SerializeField] private Dash dash;
 
         private PlayerInput input;
@@ -29,6 +32,8 @@ namespace Game.Components
             input.Player.Sprint.canceled += _ => movementController.StopSprinting();
 
             input.Player.Jump.performed += _ => movementController.Jump();
+
+            input.Player.Interact.performed += _ => interactor.Interact();
 
             input.Player.Dash.performed += _ => Dash();
         }

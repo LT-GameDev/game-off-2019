@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 239962760297536072}
   - component: {fileID: 1154736888894761876}
   - component: {fileID: 1594446915}
+  - component: {fileID: 9105124106497067472}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -149,6 +150,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementController: {fileID: 239962760297536072}
   faceCameraDirection: {fileID: 1594446915}
+  interactor: {fileID: 9105124106497067472}
   dash: {fileID: 1992857065937388885}
 --- !u!114 &1594446915
 MonoBehaviour:
@@ -164,6 +166,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   characterBody: {fileID: 1154736888894761877}
   lookSpeed: 5
+--- !u!114 &9105124106497067472
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154736888894761875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03855b9c495f4088b0d12943cdc2cc35, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1154736889061566106
 GameObject:
   m_ObjectHideFlags: 0
