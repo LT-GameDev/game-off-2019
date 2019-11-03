@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 649
 
 using Game.Interactions;
+using Game.Utility;
 using UnityEngine;
 using UnityEngine.Events;
 
@@ -8,22 +9,24 @@ namespace Game.Components
 {
     public class Interactor : MonoBehaviour
     {
-        [SerializeField] private UnityEvent canInteract;
-        [SerializeField] private UnityEvent cannotInteract;
+        [SerializeField] private bool shouldNotifyUI;
         
         private IInteractable interactable;
 
         public void Interact()
         {
-            interactable?.Interact();
+            if (interactable.IsNull())
+                return;
+            
+            interactable.Interact();
         }
         
         private void OnTriggerEnter(Collider collider)
         {
             interactable = collider.GetComponent<IInteractable>();
             
-            if (interactable != null)
-                canInteract.Invoke();
+            if (!interactable.IsNull() && shouldNotifyUI)
+                interactable.Notify(true);
         }
 
         private void OnTriggerExit(Collider collider)
@@ -34,7 +37,7 @@ namespace Game.Components
             {
                 interactable = null;
                 
-                cannotInteract.Invoke();
+                interactableInstance.Notify(false);
             }
         }
     }
