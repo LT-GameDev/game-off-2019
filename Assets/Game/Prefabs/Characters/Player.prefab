@@ -62,7 +62,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c675292186dfedd4c86168dcde32934d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  humanoidMovement: {fileID: 1154736889062610741}
+  movementController: {fileID: 9157472089624918909}
 --- !u!1 &1154736889061566106
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,6 +165,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1154736889062610738}
+  - component: {fileID: 9157472089624918909}
   - component: {fileID: 1154736889062610741}
   m_Layer: 0
   m_Name: Movement
@@ -187,6 +188,19 @@ Transform:
   m_Father: {fileID: 1154736888894761874}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9157472089624918909
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154736889062610739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6cbf0872187b4a84f4bbc7d53d0d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  humanoidMovement: {fileID: 1154736889062610741}
 --- !u!114 &1154736889062610741
 MonoBehaviour:
   m_ObjectHideFlags: 0

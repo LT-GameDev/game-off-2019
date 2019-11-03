@@ -8,21 +8,13 @@ using UnityEngine.InputSystem;
 
 namespace Game.Components
 {
-    public enum MovementMode
-    {
-        Humanoid
-    }
-
     public class PlayerInputController : MonoBehaviour
     {
-        [SerializeField] private HumanoidMovement humanoidMovement;
+        [SerializeField] private PlayerMovementController movementController;
 
         private PlayerInput input;
-        private MovementMode movementMode;
-        private MovementBase movementMethod;
 
         private Vector2 playerInput;
-        private bool isWalking;
 
         private void Awake()
         {
@@ -31,13 +23,10 @@ namespace Game.Components
             input.Player.Move.performed += ctx => playerInput = ctx.ReadValue<Vector2>();
             input.Player.Move.canceled  += _ => playerInput = Vector2.zero;
 
-            input.Player.ToggleWalkRun.performed += _ => ToggleWalking();
+            input.Player.ToggleWalkRun.performed += _ => movementController.ToggleWalking();
 
-            input.Player.Sprint.started  += _ => StartSprinting();
-            input.Player.Sprint.canceled += _ => StopSprinting();
-
-            SetMovementState(false);
-            SwitchMovementMode(default);
+            input.Player.Sprint.started  += _ => movementController.StartSprinting();
+            input.Player.Sprint.canceled += _ => movementController.StopSprinting();
         }
 
         private void OnEnable()
@@ -47,53 +36,12 @@ namespace Game.Components
 
         private void Update()
         {
-            movementMethod?.Move(playerInput);
+            movementController.Move(playerInput);
         }
 
         private void OnDisable()
         {
             input.Player.Disable();
-        }
-
-        private void SwitchMovementMode(MovementMode mode)
-        {
-            switch (mode)
-            {
-                case MovementMode.Humanoid:
-                    DisableActiveMovementMethod();
-
-                    movementMethod = humanoidMovement;
-                    movementMethod.enabled = true;
-                    break;
-            }
-
-            void DisableActiveMovementMethod()
-            {
-                if (movementMethod)
-                    movementMethod.enabled = false;
-            }
-        }
-
-        private void SetMovementState(bool state)
-        {
-            humanoidMovement.enabled = false;
-        }
-
-        private void StartSprinting()
-        {
-            humanoidMovement.SetSprinting(true);
-        }
-
-        private void StopSprinting()
-        {
-            humanoidMovement.SetSprinting(false);
-        }
-
-        private void ToggleWalking()
-        {
-            isWalking = !isWalking;
-
-            humanoidMovement.SetWalking(isWalking);
         }
     }
 }

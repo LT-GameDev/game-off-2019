@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace Game.Components.Movement
 {
-    public class HumanoidMovement : MovementBase
+    public class HumanoidMovement : MonoBehaviour
     {
         [SerializeField] private Rigidbody characterBody;
         [SerializeField] private float sprintMultiplier;
@@ -59,7 +59,7 @@ namespace Game.Components.Movement
             movementInput = Vector3.zero;
         }
 
-        public override void Move(Vector2 input)
+        public void Move(Vector2 input)
         {
             if (enabled)
             {
