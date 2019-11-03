@@ -21,6 +21,11 @@ namespace Game.Components.Movement
             humanoidMovement.Move(movementInput);
         }
 
+        public void Jump()
+        {
+            humanoidMovement.Jump();
+        }
+
         public void StartSprinting()
         {
             humanoidMovement.SetSprinting(true);

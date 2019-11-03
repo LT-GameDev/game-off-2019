@@ -27,6 +27,8 @@ namespace Game.Components
 
             input.Player.Sprint.started  += _ => movementController.StartSprinting();
             input.Player.Sprint.canceled += _ => movementController.StopSprinting();
+
+            input.Player.Jump.performed += _ => movementController.Jump();
         }
 
         private void OnEnable()
