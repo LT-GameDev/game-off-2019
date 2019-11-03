@@ -29,6 +29,7 @@ namespace Game.Components.Movement
 
     public class PlayerMovementController : MonoBehaviour
     {
+        [SerializeField] private Transform childMeshRoot;
         [SerializeField] private DefaultMovement defaultMovement;
 
         private Transform myTransform;
@@ -59,6 +60,9 @@ namespace Game.Components.Movement
                 groundable.GroundCheck();
 
             currentMovementMode?.ApplyPhysics(context, Time.fixedDeltaTime);
+
+            if (context.movementDirection.magnitude > 0.1f)
+                childMeshRoot.forward = context.movementDirection;
             
             // Consume state
             context.movementDirection = Vector3.zero;
