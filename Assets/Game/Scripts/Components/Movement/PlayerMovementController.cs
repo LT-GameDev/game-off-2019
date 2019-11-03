@@ -76,19 +76,14 @@ namespace Game.Components.Movement
             context.jumping = true;
         }
 
-        public void StartSprinting()
+        public void SetSprinting(bool sprinting)
         {
-            context.sprinting = true;
+            context.sprinting = sprinting;
         }
 
-        public void StopSprinting()
+        public void SetWalking(bool walking)
         {
-            context.sprinting = false;
-        }
-
-        public void ToggleWalking()
-        {
-            context.walking = !context.walking;
+            context.walking = walking;
         }
 
         public void SwitchMode(MovementMode mode)
