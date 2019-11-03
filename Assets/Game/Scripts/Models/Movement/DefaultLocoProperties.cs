@@ -8,7 +8,7 @@ using UnityEngine;
 namespace Game.Models.Movement
 {
     [CreateAssetMenu(menuName = "Movement/Humanoid Loco Properties")]
-    public class HumanoidLocoProperties : ScriptableObject
+    public class DefaultLocoProperties : ScriptableObject
     {
         [SerializeField] private float sprintMultiplier;
         [SerializeField] private float walkMultiplier;

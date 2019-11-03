@@ -9,13 +9,13 @@ using Game.Utility;
 namespace Game.Components.Movement
 {
     [Serializable]
-    public class HumanoidMovement : CharacterMovement, IGroundable
+    public class DefaultMovement : CharacterMovement, IGroundable
     {
         [SerializeField] private Rigidbody body;
         [SerializeField] private CapsuleCollider coll;
         [SerializeField] private GroundCheck groundChecker;
-        [SerializeField] private HumanoidLocoPhysics loco;
-        [SerializeField] private HumanoidJumpAndFallPhysics jumpAndFall;
+        [SerializeField] private DefaultLocoPhysics loco;
+        [SerializeField] private DefaultJumpAndFallPhysics jumpAndFall;
 
         public override MovementContext InitializeContext(MovementContext context)
         {

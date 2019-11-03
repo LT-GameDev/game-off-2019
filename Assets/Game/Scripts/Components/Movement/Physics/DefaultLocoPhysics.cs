@@ -1,18 +1,15 @@
 ﻿#pragma warning disable 649
 
 using Game.Models.Movement;
-using Game.Utility;
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Components.Movement.Physics
 {
     [Serializable]
-    public class HumanoidLocoPhysics : PhysicsCallback
+    public class DefaultLocoPhysics : PhysicsCallback
     {
-        [SerializeField] private HumanoidLocoProperties properties;
+        [SerializeField] private DefaultLocoProperties properties;
 
         public override void Apply(MovementContext context, float physicsTimeStep)
         {

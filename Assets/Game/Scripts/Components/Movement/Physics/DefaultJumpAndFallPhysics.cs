@@ -1,13 +1,15 @@
-﻿using System;
+﻿#pragma warning disable 649
+
+using System;
 using Game.Models.Movement;
 using UnityEngine;
 
 namespace Game.Components.Movement.Physics
 {
     [Serializable]
-    public class HumanoidJumpAndFallPhysics : PhysicsCallback
+    public class DefaultJumpAndFallPhysics : PhysicsCallback
     {
-        [SerializeField] private HumanoidJumpAndFallProperties properties;
+        [SerializeField] private DefaultJumpAndFallProperties properties;
         
         public override void Apply(MovementContext context, float physicsTimeStep)
         {

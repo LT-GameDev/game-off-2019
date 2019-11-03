@@ -30,8 +30,9 @@ namespace Game.Components.Movement
 
     public class PlayerMovementController : MonoBehaviour
     {
-        [SerializeField] private HumanoidMovement humanoidMovement;
+        [SerializeField] private DefaultMovement defaultMovement;
 
+        private Transform myTransform;
         private CharacterMovement currentMovementMode;
         private MovementContext context;
         private Vector2 movementInput;
@@ -40,8 +41,10 @@ namespace Game.Components.Movement
 
         private void Awake()
         {
+            myTransform = transform;
+            
             movementModes = new Dictionary<MovementMode, CharacterMovement> {
-                { MovementMode.Humanoid, humanoidMovement }
+                { MovementMode.Humanoid, defaultMovement }
             };
 
             SwitchMode(default);
@@ -51,7 +54,7 @@ namespace Game.Components.Movement
         {
             context.accelerate = movementInput.magnitude > 0.1f;
 
-            context.movementDirection = (transform.forward * movementInput.y + transform.right * movementInput.x).normalized;
+            context.movementDirection = (myTransform.forward * movementInput.y + myTransform.right * movementInput.x).normalized;
             
             if (currentMovementMode is IGroundable groundable)
                 groundable.GroundCheck();
