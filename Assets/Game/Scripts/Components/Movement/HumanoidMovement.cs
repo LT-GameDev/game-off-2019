@@ -9,11 +9,13 @@ namespace Game.Components.Movement
     public class HumanoidMovement : MovementBase
     {
         [SerializeField] private Rigidbody characterBody;
+        [SerializeField] private float walkMultiplier;
         [SerializeField] private float movementSpeed;
         [SerializeField] private float acceleration;
         [SerializeField] private float deceleration;
 
         private Vector2 movementInput;
+        private bool walking;
 
         private void OnDisable()
         {
@@ -34,7 +36,7 @@ namespace Game.Components.Movement
                 var newVelocity = movementDirection * (existingVelocity.magnitude + deltaSpeed);
 
                 // change character's velocity
-                characterBody.velocity = Vector3.ClampMagnitude(newVelocity, movementSpeed) + gravityComponent;
+                characterBody.velocity = Vector3.ClampMagnitude(newVelocity, MovementSpeed) + gravityComponent;
             }
             else if (existingVelocity.magnitude > 0.1f)
             {
@@ -60,6 +62,22 @@ namespace Game.Components.Movement
             if (enabled)
             {
                 movementInput = input;
+            }
+        }
+        
+        public void SetWalking(bool state)
+        {
+            walking = state;
+        }
+
+        private float MovementSpeed
+        {
+            get
+            {
+                if (walking)
+                    return movementSpeed * walkMultiplier;
+
+                return movementSpeed;
             }
         }
     }

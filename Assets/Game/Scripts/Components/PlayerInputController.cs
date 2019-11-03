@@ -22,6 +22,7 @@ namespace Game.Components
         private MovementBase movementMethod;
 
         private Vector2 playerInput;
+        private bool isWalking;
 
         private void Awake()
         {
@@ -29,6 +30,8 @@ namespace Game.Components
 
             input.Player.Move.performed += ctx => playerInput = ctx.ReadValue<Vector2>();
             input.Player.Move.canceled  += _ => playerInput = Vector2.zero;
+
+            input.Player.ToggleWalkRun.performed += _ => humanoidMovement.SetWalking(isWalking = !isWalking);
 
             SetMovementState(false);
             SwitchMovementMode(default);

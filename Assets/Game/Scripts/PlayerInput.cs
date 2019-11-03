@@ -26,6 +26,14 @@ namespace Game
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""ToggleWalkRun"",
+                    ""type"": ""Button"",
+                    ""id"": ""85df6321-66ad-4cd1-ad5d-24ca723d0364"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -83,6 +91,17 @@ namespace Game
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""64f97e21-a423-4850-a148-7892293da2b3"",
+                    ""path"": ""<Keyboard>/capsLock"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""ToggleWalkRun"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -109,6 +128,7 @@ namespace Game
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+            m_Player_ToggleWalkRun = m_Player.FindAction("ToggleWalkRun", throwIfNotFound: true);
         }
 
         ~PlayerInput()
@@ -159,11 +179,13 @@ namespace Game
         private readonly InputActionMap m_Player;
         private IPlayerActions m_PlayerActionsCallbackInterface;
         private readonly InputAction m_Player_Move;
+        private readonly InputAction m_Player_ToggleWalkRun;
         public struct PlayerActions
         {
             private PlayerInput m_Wrapper;
             public PlayerActions(PlayerInput wrapper) { m_Wrapper = wrapper; }
             public InputAction @Move => m_Wrapper.m_Player_Move;
+            public InputAction @ToggleWalkRun => m_Wrapper.m_Player_ToggleWalkRun;
             public InputActionMap Get() { return m_Wrapper.m_Player; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -176,6 +198,9 @@ namespace Game
                     Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                     Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                     Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                    ToggleWalkRun.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleWalkRun;
+                    ToggleWalkRun.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleWalkRun;
+                    ToggleWalkRun.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnToggleWalkRun;
                 }
                 m_Wrapper.m_PlayerActionsCallbackInterface = instance;
                 if (instance != null)
@@ -183,6 +208,9 @@ namespace Game
                     Move.started += instance.OnMove;
                     Move.performed += instance.OnMove;
                     Move.canceled += instance.OnMove;
+                    ToggleWalkRun.started += instance.OnToggleWalkRun;
+                    ToggleWalkRun.performed += instance.OnToggleWalkRun;
+                    ToggleWalkRun.canceled += instance.OnToggleWalkRun;
                 }
             }
         }
@@ -199,6 +227,7 @@ namespace Game
         public interface IPlayerActions
         {
             void OnMove(InputAction.CallbackContext context);
+            void OnToggleWalkRun(InputAction.CallbackContext context);
         }
     }
 }
