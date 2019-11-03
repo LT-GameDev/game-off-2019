@@ -35,5 +35,7 @@ namespace Game.Cameras
             cam.enabled = state;
             enabled     = state;
         }
+
+        public Vector3 Position => cam.State.FinalPosition;
     }
 }
