@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1154736888894761874}
   - component: {fileID: 1154736888894761877}
   - component: {fileID: 9028746972007319267}
+  - component: {fileID: 239962760297536072}
   - component: {fileID: 1154736888894761876}
   m_Layer: 0
   m_Name: Player
@@ -65,6 +66,26 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &239962760297536072
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1154736888894761875}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: adb6cbf0872187b4a84f4bbc7d53d0d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  humanoidMovement:
+    body: {fileID: 1154736888894761877}
+    coll: {fileID: 9028746972007319267}
+    groundChecker: {fileID: 11400000, guid: 389cc00927801224abf22e5fcf468081, type: 2}
+    loco:
+      properties: {fileID: 11400000, guid: b5513ad4aa8a19e49825c84aa73b69be, type: 2}
+    jumpAndFall:
+      properties: {fileID: 11400000, guid: c59d784f54a6b6f4ea02b2eb721fd7ca, type: 2}
 --- !u!114 &1154736888894761876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,7 +98,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c675292186dfedd4c86168dcde32934d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementController: {fileID: 9157472089624918909}
+  movementController: {fileID: 239962760297536072}
 --- !u!1 &1154736889061566106
 GameObject:
   m_ObjectHideFlags: 0
@@ -165,8 +186,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1154736889062610738}
-  - component: {fileID: 9157472089624918909}
-  - component: {fileID: 1154736889062610741}
   m_Layer: 0
   m_Name: Movement
   m_TagString: Untagged
@@ -188,39 +207,3 @@ Transform:
   m_Father: {fileID: 1154736888894761874}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &9157472089624918909
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1154736889062610739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: adb6cbf0872187b4a84f4bbc7d53d0d4, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  humanoidMovement: {fileID: 1154736889062610741}
---- !u!114 &1154736889062610741
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1154736889062610739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5e929bb4d72f9fd458c01892266a9bcd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  characterBody: {fileID: 1154736888894761877}
-  groundChecker: {fileID: 11400000, guid: 389cc00927801224abf22e5fcf468081, type: 2}
-  characterCollider: {fileID: 9028746972007319267}
-  extraFallingAcceleration: 9.8
-  sprintMultiplier: 1.7
-  walkMultiplier: 0.3
-  movementSpeed: 8
-  acceleration: 25
-  deceleration: 35
-  airControl: 0.02
-  jumpForce: 10

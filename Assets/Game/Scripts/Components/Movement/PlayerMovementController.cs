@@ -2,6 +2,8 @@
 
 using UnityEngine;
 using System.Collections;
+using Game.Utility;
+using System.Collections.Generic;
 
 namespace Game.Components.Movement
 {
@@ -10,54 +12,88 @@ namespace Game.Components.Movement
         Humanoid
     }
 
+    public interface IGroundable
+    {
+        void GroundCheck();
+    }
+
+    public struct MovementContext
+    {
+        public bool accelerate;
+        public bool sprinting;
+        public bool jumping;
+        public bool walking;
+        public Rigidbody characterBody;
+        public GroundCheck groundCheckState;
+        public Vector3 movementDirection;
+    }
+
     public class PlayerMovementController : MonoBehaviour
     {
         [SerializeField] private HumanoidMovement humanoidMovement;
 
-        private bool walking;
+        private CharacterMovement currentMovementMode;
+        private MovementContext context;
+        private Vector2 movementInput;
+
+        private Dictionary<MovementMode, CharacterMovement> movementModes;
+
+        private void Awake()
+        {
+            movementModes = new Dictionary<MovementMode, CharacterMovement> {
+                { MovementMode.Humanoid, humanoidMovement }
+            };
+
+            SwitchMode(default);
+        }
+
+        private void FixedUpdate()
+        {
+            context.accelerate = movementInput.magnitude > 0.1f;
+
+            context.movementDirection = (transform.forward * movementInput.y + transform.right * movementInput.x).normalized;
+            
+            if (currentMovementMode is IGroundable groundable)
+                groundable.GroundCheck();
+
+            currentMovementMode?.ApplyPhysics(context, Time.fixedDeltaTime);
+            
+            // Consume state
+            context.movementDirection = Vector3.zero;
+            context.accelerate        = false;
+            context.jumping           = false;
+        }
 
         public void Move(Vector2 movementInput)
         {
-            humanoidMovement.Move(movementInput);
+            this.movementInput = movementInput;
         }
 
         public void Jump()
         {
-            humanoidMovement.Jump();
+            context.jumping = true;
         }
 
         public void StartSprinting()
         {
-            humanoidMovement.SetSprinting(true);
+            context.sprinting = true;
         }
 
         public void StopSprinting()
         {
-            humanoidMovement.SetSprinting(false);
+            context.sprinting = false;
         }
 
         public void ToggleWalking()
         {
-            walking = !walking;
-
-            humanoidMovement.SetWalking(walking);
+            context.walking = !context.walking;
         }
 
-        public void SwitchMovementMode(MovementMode mode)
+        public void SwitchMode(MovementMode mode)
         {
-            switch (mode)
-            {
-                case MovementMode.Humanoid:
-                    SetAllModeStates(false);
+            currentMovementMode = movementModes[mode];
 
-                    humanoidMovement.enabled = true;
-                    break;
-            }
-        }
-
-        private void SetAllModeStates(bool state)
-        {
-            humanoidMovement.enabled = state;
+            context = currentMovementMode.InitializeContext(context);
         }
     }
 }
