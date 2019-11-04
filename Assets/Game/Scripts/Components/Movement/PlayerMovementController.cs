@@ -31,6 +31,7 @@ namespace Game.Components.Movement
     {
         [SerializeField] private Transform childMeshRoot;
         [SerializeField] private DefaultMovement defaultMovement;
+        [SerializeField] private float movementDirectionLookSpeed;
 
         private Transform myTransform;
         private CharacterMovement currentMovementMode;
@@ -62,7 +63,11 @@ namespace Game.Components.Movement
             currentMovementMode?.ApplyPhysics(context, Time.fixedDeltaTime);
 
             if (context.movementDirection.magnitude > 0.1f)
-                childMeshRoot.forward = context.movementDirection;
+            {
+                var lookRotation = Quaternion.LookRotation(context.movementDirection, myTransform.up);
+
+                childMeshRoot.rotation = Quaternion.Lerp(childMeshRoot.rotation, lookRotation, movementDirectionLookSpeed * Time.deltaTime);
+            }
             
             // Consume state
             context.movementDirection = Vector3.zero;

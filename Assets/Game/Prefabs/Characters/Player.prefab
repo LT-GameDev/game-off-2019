@@ -137,6 +137,7 @@ MonoBehaviour:
       properties: {fileID: 11400000, guid: b5513ad4aa8a19e49825c84aa73b69be, type: 2}
     jumpAndFall:
       properties: {fileID: 11400000, guid: c59d784f54a6b6f4ea02b2eb721fd7ca, type: 2}
+  movementDirectionLookSpeed: 10
 --- !u!114 &1154736888894761876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -346,6 +347,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: TailedFox
       objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: abca64c65a3ba124d839ba30fdab1de1, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 08acab98cf6cfef4888588d0dd305f55, type: 2}
     - target: {fileID: 400174, guid: abca64c65a3ba124d839ba30fdab1de1, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -390,10 +395,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: abca64c65a3ba124d839ba30fdab1de1, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 08acab98cf6cfef4888588d0dd305f55, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: abca64c65a3ba124d839ba30fdab1de1, type: 3}
 --- !u!1 &2382809184618560495 stripped
