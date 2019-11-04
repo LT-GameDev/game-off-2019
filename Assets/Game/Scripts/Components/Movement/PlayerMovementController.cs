@@ -1,8 +1,10 @@
 ﻿#pragma warning disable 649
 
 using UnityEngine;
-using Game.Utility;
 using System.Collections.Generic;
+using Game.Components.Movement.DefaultMovement;
+using Game.Components.Movement.MovementControl;
+using Game.Models.Movement.Contexts;
 
 namespace Game.Components.Movement
 {
@@ -11,40 +13,26 @@ namespace Game.Components.Movement
         Humanoid
     }
 
-    public interface IGroundable
-    {
-        void GroundCheck();
-    }
-
-    public struct MovementContext
-    {
-        public bool accelerate;
-        public bool sprinting;
-        public bool jumping;
-        public bool walking;
-        public Rigidbody characterBody;
-        public GroundCheck groundCheckState;
-        public Vector3 movementDirection;
-    }
-
     public class PlayerMovementController : MonoBehaviour
     {
+        [Header("Properties")]
         [SerializeField] private Transform childMeshRoot;
-        [SerializeField] private DefaultMovement defaultMovement;
-        [SerializeField] private float movementDirectionLookSpeed;
+        
+        [Header("Movement Modes")]
+        [SerializeField] private DefaultMovementLogic defaultMovement;
 
         private Transform myTransform;
-        private CharacterMovement currentMovementMode;
-        private MovementContext context;
+        private IMovementLogic<DefaultMovementContext> currentMovementMode;
+        private DefaultMovementContext context;
         private Vector2 movementInput;
 
-        private Dictionary<MovementMode, CharacterMovement> movementModes;
+        private Dictionary<MovementMode, IMovementLogic<DefaultMovementContext>> movementModes;
 
         private void Awake()
         {
             myTransform = transform;
             
-            movementModes = new Dictionary<MovementMode, CharacterMovement> {
+            movementModes = new Dictionary<MovementMode, IMovementLogic<DefaultMovementContext>> {
                 { MovementMode.Humanoid, defaultMovement }
             };
 
@@ -53,26 +41,16 @@ namespace Game.Components.Movement
 
         private void FixedUpdate()
         {
-            context.accelerate = movementInput.magnitude > 0.1f;
+            context.Accelerate = movementInput.magnitude > 0.1f;
 
-            context.movementDirection = (myTransform.forward * movementInput.y + myTransform.right * movementInput.x).normalized;
-            
-            if (currentMovementMode is IGroundable groundable)
-                groundable.GroundCheck();
+            context.MovementDirection = (myTransform.forward * movementInput.y + myTransform.right * movementInput.x).normalized;
 
-            currentMovementMode?.ApplyPhysics(context, Time.fixedDeltaTime);
-
-            if (context.movementDirection.magnitude > 0.1f)
-            {
-                var lookRotation = Quaternion.LookRotation(context.movementDirection, myTransform.up);
-
-                childMeshRoot.rotation = Quaternion.Lerp(childMeshRoot.rotation, lookRotation, movementDirectionLookSpeed * Time.deltaTime);
-            }
+            currentMovementMode?.Run(context, Time.fixedDeltaTime);
             
             // Consume state
-            context.movementDirection = Vector3.zero;
-            context.accelerate        = false;
-            context.jumping           = false;
+            context.MovementDirection = Vector3.zero;
+            context.Accelerate        = false;
+            context.Jumping           = false;
         }
 
         public void Move(Vector2 movementInput)
@@ -82,24 +60,24 @@ namespace Game.Components.Movement
 
         public void Jump()
         {
-            context.jumping = true;
+            context.Jumping = true;
         }
 
         public void SetSprinting(bool sprinting)
         {
-            context.sprinting = sprinting;
+            context.Sprinting = sprinting;
         }
 
         public void SetWalking(bool walking)
         {
-            context.walking = walking;
+            context.Walking = walking;
         }
 
-        public void SwitchMode(MovementMode mode)
+        private void SwitchMode(MovementMode mode)
         {
             currentMovementMode = movementModes[mode];
 
-            context = currentMovementMode.InitializeContext(context);
+            context = currentMovementMode.CreateContext();
         }
     }
 }

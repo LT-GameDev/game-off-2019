@@ -130,6 +130,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   childMeshRoot: {fileID: 3155387839438168464}
   defaultMovement:
+    mesh: {fileID: 3155387839438168464}
     body: {fileID: 1154736888894761877}
     coll: {fileID: 9028746972007319267}
     groundChecker: {fileID: 11400000, guid: 389cc00927801224abf22e5fcf468081, type: 2}
@@ -137,7 +138,7 @@ MonoBehaviour:
       properties: {fileID: 11400000, guid: b5513ad4aa8a19e49825c84aa73b69be, type: 2}
     jumpAndFall:
       properties: {fileID: 11400000, guid: c59d784f54a6b6f4ea02b2eb721fd7ca, type: 2}
-  movementDirectionLookSpeed: 10
+    smoothCourseSpeed: 12
 --- !u!114 &1154736888894761876
 MonoBehaviour:
   m_ObjectHideFlags: 0
