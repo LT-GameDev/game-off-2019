@@ -18,8 +18,6 @@ namespace Game.Components.Movement
     {
         [Header("Properties")]
         [SerializeField] private Transform childMeshRoot;
-        [SerializeField] private float wallRunBeginAngle;
-        [SerializeField] private float wallRunBeginSpeed;
         
         [Header("Movement Modes")]
         [SerializeField] private DefaultMovementLogic defaultMovement;
@@ -81,6 +79,12 @@ namespace Game.Components.Movement
 
         private void DefaultMovementUpdate()
         {
+            if (CanSwitchToWallRun())
+            {
+                // switch mode
+                return;
+            }
+            
             var context = defaultMovement.Context;
             
             context.Accelerate = movementInput.magnitude > 0.1f;
@@ -93,6 +97,40 @@ namespace Game.Components.Movement
             context.MovementDirection = Vector3.zero;
             context.Accelerate        = false;
             context.Jumping           = false;
+        }
+
+        private bool CanSwitchToWallRun()
+        {
+            var position = transform.position;
+            
+            var right  = transform.right;
+            var length = 0.6f;
+
+            if (Physics.Raycast(position, right, out var rightHit, length))
+            {
+                this.Log().Debug($"Can run on wall: {rightHit.collider.gameObject.name}");
+                GizmoDrawer.Draw(new LineGizmo(position, position + length * right, Color.green), 20);
+
+                return true;
+            }
+            else
+            {
+                GizmoDrawer.Draw(new LineGizmo(position, position + length * right, Color.red), 20);
+            }
+            
+            if (Physics.Raycast(position, -right, out var leftHit, length))
+            {
+                this.Log().Debug($"Can run on wall: {leftHit.collider.gameObject.name}");
+                GizmoDrawer.Draw(new LineGizmo(position, position - length * right, Color.green), 20);
+
+                return true;
+            }
+            else
+            {
+                GizmoDrawer.Draw(new LineGizmo(position, position - length * right, Color.red), 20);
+            }
+
+            return false;
         }
     }
 }

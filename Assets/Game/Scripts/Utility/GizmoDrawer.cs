@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 namespace Game.Utility
 {
     public class GizmoDrawer : MonoBehaviour
@@ -17,6 +21,11 @@ namespace Game.Utility
 
         private void OnDrawGizmos()
         {
+            #if UNITY_EDITOR
+            if (EditorApplication.isPaused)
+                return;
+            #endif
+            
             // Draw pinned gizmos
             foreach (var gizmo in pinnedGizmos)
             {
@@ -42,20 +51,20 @@ namespace Game.Utility
             }
         }
 
-        public void Draw(Gizmo gizmo, int frames = 60)
+        public static void Draw(Gizmo gizmo, int frames = 60)
         {
-            tempGizmos.Add((gizmo, frames));
+            Instance().tempGizmos.Add((gizmo, frames));
         }
 
-        public void Pin(Gizmo gizmo)
+        public static void Pin(Gizmo gizmo)
         {
-            pinnedGizmos.Add(gizmo);
+            Instance().pinnedGizmos.Add(gizmo);
         }
         
         #region Singleton
         private static GizmoDrawer _instance;
 
-        public static GizmoDrawer Instane()
+        public static GizmoDrawer Instance()
         {
             if (!_instance)
             {
