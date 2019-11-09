@@ -109,6 +109,8 @@ namespace Game.Components.Movement
 
             context.MovementDirection = (myTransform.forward * movementInput.y + myTransform.right * movementInput.x).normalized;
 
+            context.GroundCheckState = groundChecker;
+
             defaultMovement.Run(Time.fixedDeltaTime);
             
             // Consume state
@@ -119,7 +121,7 @@ namespace Game.Components.Movement
 
         private void WallMovementUpdate()
         {
-            if (CanSwitchToDefault())
+            if (ShouldSwitchToDefault())
             {
                 SwitchMode(MovementMode.Humanoid);
                 return;
@@ -167,11 +169,11 @@ namespace Game.Components.Movement
             }
         }
         
-        private bool CanSwitchToDefault()
+        private bool ShouldSwitchToDefault()
         {
             if (currentMovementMode == MovementMode.WallMovement && groundChecker.Grounded)
             {
-                this.Log().Debug("Can move in default mode");
+                this.Log().Debug("Should move in default mode");
                 return true;
             }
 
