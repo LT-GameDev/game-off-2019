@@ -20,10 +20,11 @@ namespace Game.Components.Movement
             DeltaTime = 0;            // Reset delta time after logic update is finished 
         }
 
-        public abstract TContext CreateContext();
+        public abstract void Initialize();
         public abstract TContext Preprocess(TContext context);
         public abstract void Postprocess(TContext context);
 
+        public TContext Context { get; protected set; }
         protected abstract PhysicsCallback<TContext> LocoPhysics { get; }
         protected abstract PhysicsCallback<TContext> JumpAndFallPhysics { get; }
         protected float DeltaTime { get; private set; }

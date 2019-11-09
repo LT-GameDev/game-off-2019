@@ -27,14 +27,17 @@ namespace Game.Components.Movement.DefaultMovement
         [Header("Properties")]
         [SerializeField] private float smoothCourseSpeed;
 
-        public override DefaultMovementContext CreateContext()
+        public DefaultMovementLogic()
         {
-            var context = new DefaultMovementContext();
-            
-            context.CharacterBody    = body;
-            context.GroundCheckState = groundChecker;
+            Context = new DefaultMovementContext();
+        }
 
-            return context;
+        public override void Initialize()
+        {
+            body.useGravity = true;
+            
+            Context.CharacterBody    = body;
+            Context.GroundCheckState = groundChecker;
         }
 
         public override DefaultMovementContext Preprocess(DefaultMovementContext context)

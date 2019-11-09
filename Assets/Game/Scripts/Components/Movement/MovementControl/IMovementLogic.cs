@@ -4,8 +4,7 @@ namespace Game.Components.Movement.MovementControl
 {
     public interface IMovementLogic<TContext>
     {
-        TContext CreateContext();
-        
+        void Initialize();
         void Run(TContext context, float deltaTime);
     }
 }
