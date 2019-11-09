@@ -49,7 +49,7 @@ namespace Game.Components
         {
             movementController.Move(playerInput);
 
-            animationController.Context.Loco = playerInput.magnitude > 0.1f;
+            animationController.Context.Loco = playerInput.magnitude > 0.1f && movementController.Grounded;
         }
 
         private void OnDisable()

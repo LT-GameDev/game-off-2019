@@ -129,8 +129,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMeshRoot: {fileID: 3155387839438168464}
-  wallRunBeginAngle: 10
-  wallRunBeginSpeed: 0
+  characterBody: {fileID: 1154736888894761877}
+  characterCollider: {fileID: 9028746972007319267}
+  groundChecker: {fileID: 11400000, guid: 389cc00927801224abf22e5fcf468081, type: 2}
+  wallRunRequiredMinSpeed: 6
+  maxWallHandlingAngle: 30
   defaultMovement:
     mesh: {fileID: 3155387839438168464}
     body: {fileID: 1154736888894761877}

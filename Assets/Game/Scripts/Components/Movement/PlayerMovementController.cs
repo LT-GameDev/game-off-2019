@@ -18,11 +18,17 @@ namespace Game.Components.Movement
     {
         [Header("Properties")]
         [SerializeField] private Transform childMeshRoot;
+        [SerializeField] private Rigidbody characterBody;
+        [SerializeField] private CapsuleCollider characterCollider;
+        [SerializeField] private GroundCheck groundChecker;
+        [SerializeField] private float wallRunRequiredMinSpeed;
+        [SerializeField] private float maxWallHandlingAngle;
         
         [Header("Movement Modes")]
         [SerializeField] private DefaultMovementLogic defaultMovement;
 
         private Transform myTransform;
+        private MovementMode currentMovementMode;
         private Action currentMovementUpdate;
         private Vector2 movementInput;
 
@@ -33,7 +39,8 @@ namespace Game.Components.Movement
             myTransform = transform;
             
             movementModes = new Dictionary<MovementMode, Action> {
-                { MovementMode.Humanoid, DefaultMovementUpdate }
+                { MovementMode.Humanoid, DefaultMovementUpdate },
+                { MovementMode.WallMovement, WallMovementUpdate }
             };
 
             SwitchMode(default);
@@ -41,6 +48,8 @@ namespace Game.Components.Movement
 
         private void FixedUpdate()
         {
+            GlobalGroundCheck();
+            
             currentMovementUpdate?.Invoke();
         }
 
@@ -64,9 +73,18 @@ namespace Game.Components.Movement
             defaultMovement.Context.Walking = walking;
         }
 
+        private void GlobalGroundCheck()
+        {
+            var position   = characterBody.position + characterBody.rotation * characterCollider.center;
+            var halfHeight = characterCollider.height / 2;
+            
+            groundChecker.Check(position, halfHeight, characterCollider.radius);
+        }
+
         private void SwitchMode(MovementMode mode)
         {
             currentMovementUpdate = movementModes[mode];
+            currentMovementMode   = mode;
 
             switch (mode)
             {
@@ -81,7 +99,7 @@ namespace Game.Components.Movement
         {
             if (CanSwitchToWallRun())
             {
-                // switch mode
+                SwitchMode(MovementMode.WallMovement);
                 return;
             }
             
@@ -99,38 +117,67 @@ namespace Game.Components.Movement
             context.Jumping           = false;
         }
 
+        private void WallMovementUpdate()
+        {
+            if (CanSwitchToDefault())
+            {
+                SwitchMode(MovementMode.Humanoid);
+                return;
+            }
+        }
+
         private bool CanSwitchToWallRun()
         {
             var position = transform.position;
+            var length   = 0.6f;
             
-            var right  = transform.right;
-            var length = 0.6f;
+            var right  = Vector3.Cross(characterBody.velocity.normalized, Vector3.up);
 
-            if (Physics.Raycast(position, right, out var rightHit, length))
-            {
-                this.Log().Debug($"Can run on wall: {rightHit.collider.gameObject.name}");
-                GizmoDrawer.Draw(new LineGizmo(position, position + length * right, Color.green), 20);
+            // Check whether character has any surfaces
+            // it can perform wall movement on
+            var rightCheck = InternalCheck(right);
+            var leftCheck  = InternalCheck(-right);
 
-                return true;
-            }
-            else
-            {
-                GizmoDrawer.Draw(new LineGizmo(position, position + length * right, Color.red), 20);
-            }
+            return (rightCheck || leftCheck) && !(rightCheck && leftCheck);
+
             
-            if (Physics.Raycast(position, -right, out var leftHit, length))
+            bool InternalCheck(Vector3 direction)
             {
-                this.Log().Debug($"Can run on wall: {leftHit.collider.gameObject.name}");
-                GizmoDrawer.Draw(new LineGizmo(position, position - length * right, Color.green), 20);
+                if (Physics.Raycast(position, direction, out var hit, length))
+                {
+                    this.Log().Debug($"Can run on wall: {hit.collider.gameObject.name}");
 
-                return true;
+                    var angle = Vector3.SignedAngle(hit.normal, -direction, Vector3.up);
+
+                    // Check if character approached the wall withing snapping threshold
+                    // and is running at or above the required minimum speed
+                    if (Mathf.Abs(angle) < maxWallHandlingAngle && characterBody.velocity.magnitude > wallRunRequiredMinSpeed)
+                    {
+                        GizmoDrawer.Draw(new LineGizmo(position, position + length * direction, Color.green), 20);
+                        return true;
+                    }
+                    
+                    GizmoDrawer.Draw(new LineGizmo(position, position + length * direction, Color.blue), 20);
+                    return false;
+                }
+            
+                GizmoDrawer.Draw(new LineGizmo(position, position + length * direction, Color.red), 20);
+
+                return false;
             }
-            else
+        }
+        
+        private bool CanSwitchToDefault()
+        {
+            if (currentMovementMode == MovementMode.WallMovement && groundChecker.Grounded)
             {
-                GizmoDrawer.Draw(new LineGizmo(position, position - length * right, Color.red), 20);
+                this.Log().Debug("Can move in default mode");
+                return true;
             }
 
             return false;
         }
+
+        public bool Grounded => groundChecker.Grounded;
     }
 }

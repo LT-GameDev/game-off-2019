@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   sprintMultiplier: 1.7
   walkMultiplier: 0.5
-  movementSpeed: 8
+  movementSpeed: 4
   acceleration: 25
   deceleration: 35
   airControl: 0.05
