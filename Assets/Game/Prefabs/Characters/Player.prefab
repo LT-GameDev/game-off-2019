@@ -130,6 +130,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   childMeshRoot: {fileID: 3155387839438168464}
+  wallRunBeginAngle: 10
+  wallRunBeginSpeed: 0
   defaultMovement:
     mesh: {fileID: 3155387839438168464}
     body: {fileID: 1154736888894761877}
@@ -140,6 +142,16 @@ MonoBehaviour:
     jumpAndFall:
       properties: {fileID: 11400000, guid: c59d784f54a6b6f4ea02b2eb721fd7ca, type: 2}
     smoothCourseSpeed: 12
+  wallMovement:
+    mesh: {fileID: 3155387839438168464}
+    body: {fileID: 1154736888894761877}
+    coll: {fileID: 9028746972007319267}
+    groundChecker: {fileID: 11400000, guid: 389cc00927801224abf22e5fcf468081, type: 2}
+    wallrunPhysics:
+      properties: {fileID: 11400000, guid: 382e79f450d566d41b799dd859fd86eb, type: 2}
+    wallJumpPhysics:
+      properties: {fileID: 11400000, guid: f367fa8ac51e12241a784bcac9266e70, type: 2}
+    smoothCourseSpeed: 3
 --- !u!114 &1154736888894761876
 MonoBehaviour:
   m_ObjectHideFlags: 0
