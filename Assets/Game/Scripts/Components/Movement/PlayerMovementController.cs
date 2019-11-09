@@ -109,7 +109,7 @@ namespace Game.Components.Movement
 
             context.MovementDirection = (myTransform.forward * movementInput.y + myTransform.right * movementInput.x).normalized;
 
-            defaultMovement.Run(context, Time.fixedDeltaTime);
+            defaultMovement.Run(Time.fixedDeltaTime);
             
             // Consume state
             context.MovementDirection = Vector3.zero;

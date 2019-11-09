@@ -40,22 +40,20 @@ namespace Game.Components.Movement.DefaultMovement
             Context.GroundCheckState = groundChecker;
         }
 
-        public override DefaultMovementContext Preprocess(DefaultMovementContext context)
+        public override void Preprocess()
         {
             var position   = body.position + body.rotation * coll.center;
             var halfHeight = coll.height / 2;
             
             groundChecker.Check(position, halfHeight, coll.radius);
-
-            return context;
         }
 
-        public override void Postprocess(DefaultMovementContext context)
+        public override void Postprocess()
         {
             // Make character face where it is going smoothly
-            if (context.MovementDirection.magnitude > 0.1f)
+            if (Context.MovementDirection.magnitude > 0.1f)
             {
-                var lookRotation = Quaternion.LookRotation(context.MovementDirection, mesh.up);
+                var lookRotation = Quaternion.LookRotation(Context.MovementDirection, mesh.up);
 
                 mesh.rotation = Quaternion.Lerp(mesh.rotation, lookRotation, smoothCourseSpeed * DeltaTime);
             }
