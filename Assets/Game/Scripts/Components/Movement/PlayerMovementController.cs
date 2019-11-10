@@ -3,7 +3,9 @@
 using System;
 using UnityEngine;
 using System.Collections.Generic;
-using Game.Components.Movement.DefaultMovement;
+using Game.Cameras;
+using Game.Components.Movement.Interface;
+using Game.Models.Movement;
 using Game.Utility;
 
 namespace Game.Components.Movement
@@ -14,34 +16,44 @@ namespace Game.Components.Movement
         WallMovement
     }
 
-    public class PlayerMovementController : MonoBehaviour
+    public class PlayerMovementController : MovementController
     {
         [Header("Properties")]
         [SerializeField] private Transform childMeshRoot;
         [SerializeField] private Rigidbody characterBody;
         [SerializeField] private CapsuleCollider characterCollider;
         [SerializeField] private GroundCheck groundChecker;
-        [SerializeField] private float wallRunRequiredMinSpeed;
-        [SerializeField] private float maxWallHandlingAngle;
+        [SerializeField] private PlayerCamera playerCamera;
+        [SerializeField] private LayerMask wallLayers;
         
         [Header("Movement Modes")]
-        [SerializeField] private DefaultMovementLogic defaultMovement;
+        [SerializeField] private DefaultMovement defaultMovement;
+        [SerializeField] private WallMovement wallMovement;
 
         private Transform myTransform;
         private MovementMode currentMovementMode;
-        private Action currentMovementUpdate;
-        private Vector2 movementInput;
+        private IMovementLogic currentMovementLogic;
+        private PlayerMovementContext context;
 
-        private Dictionary<MovementMode, Action> movementModes;
+        private Dictionary<MovementMode, IMovementLogic> movementModes;
 
         private void Awake()
         {
             myTransform = transform;
+
+            playerCamera = FindObjectOfType<PlayerCamera>();
             
-            movementModes = new Dictionary<MovementMode, Action> {
-                { MovementMode.Humanoid, DefaultMovementUpdate },
-                { MovementMode.WallMovement, WallMovementUpdate }
+            context       = new PlayerMovementContext();
+            movementModes = new Dictionary<MovementMode, IMovementLogic> {
+                { MovementMode.Humanoid, defaultMovement },
+                { MovementMode.WallMovement, wallMovement }
             };
+
+            context.meshRoot = childMeshRoot;
+            context.body     = characterBody;
+            
+            defaultMovement.Initialize(context);
+            wallMovement.Initialize(context);
 
             SwitchMode(default);
         }
@@ -49,28 +61,50 @@ namespace Game.Components.Movement
         private void FixedUpdate()
         {
             GlobalGroundCheck();
+            ManageTransitions();
             
-            currentMovementUpdate?.Invoke();
+            currentMovementLogic?.Run(Time.fixedDeltaTime);
+
+            context.direction = Vector3.zero;
+            context.jump      = false;
         }
 
         public void Move(Vector2 movementInput)
         {
-            this.movementInput = movementInput;
+            context.direction = GetForward() * movementInput.y + GetRight() * movementInput.x;
         }
 
         public void Jump()
         {
-            defaultMovement.Context.Jumping = true;
+            context.jump = true;
         }
 
         public void SetSprinting(bool sprinting)
         {
-            defaultMovement.Context.Sprinting = sprinting;
+            context.sprint = sprinting;
         }
 
         public void SetWalking(bool walking)
         {
-            defaultMovement.Context.Walking = walking;
+            context.walk = walking;
+        }
+
+        private void DefaultMovementCallback()
+        {
+            defaultMovement.Run(Time.fixedDeltaTime);
+        }
+
+        private void WallMovementCallback()
+        {
+            wallMovement.Run(Time.fixedDeltaTime);
+        }
+
+        private void ManageTransitions()
+        {
+            if (ShouldEnterWallMovement())
+                SwitchMode(MovementMode.WallMovement);
+            else if (ShouldLeaveWallMovement())
+                SwitchMode(MovementMode.Humanoid);
         }
 
         private void GlobalGroundCheck()
@@ -78,108 +112,93 @@ namespace Game.Components.Movement
             var position   = characterBody.position + characterBody.rotation * characterCollider.center;
             var halfHeight = characterCollider.height / 2;
             
-            groundChecker.Check(position, halfHeight, characterCollider.radius);
+            groundChecker.Check(position, halfHeight * 0.9f, characterCollider.radius * 0.5f);
+
+            context.grounded = groundChecker.Grounded;
         }
 
         private void SwitchMode(MovementMode mode)
         {
-            currentMovementUpdate = movementModes[mode];
-            currentMovementMode   = mode;
-
-            switch (mode)
-            {
-                case MovementMode.Humanoid:
-                    this.Log().Debug("Switch to default movement!", nameof(SwitchMode));
-                    defaultMovement.Initialize();
-                    break;
-            }
+            currentMovementLogic = movementModes[mode];
+            currentMovementMode  = mode;
+            
+            currentMovementLogic.WarmUp();
+            
+            this.Log().Debug($"Switch to {mode} movement!", nameof(SwitchMode));
         }
 
-        private void DefaultMovementUpdate()
+        public override Vector3 GetForward()
         {
-            if (CanSwitchToWallRun())
-            {
-                SwitchMode(MovementMode.WallMovement);
-                return;
-            }
-            
-            var context = defaultMovement.Context;
-            
-            context.Accelerate = movementInput.magnitude > 0.1f;
+            var forward          = characterBody.position - playerCamera.Position;
+            var projectedForward = Vector3.Scale(GameWorld.GetGroundPlane(), forward);
 
-            context.MovementDirection = (myTransform.forward * movementInput.y + myTransform.right * movementInput.x).normalized;
-
-            context.GroundCheckState = groundChecker;
-
-            defaultMovement.Run(Time.fixedDeltaTime);
-            
-            // Consume state
-            context.MovementDirection = Vector3.zero;
-            context.Accelerate        = false;
-            context.Jumping           = false;
-        }
-
-        private void WallMovementUpdate()
-        {
-            if (ShouldSwitchToDefault())
-            {
-                SwitchMode(MovementMode.Humanoid);
-                return;
-            }
-        }
-
-        private bool CanSwitchToWallRun()
-        {
-            var position = transform.position;
-            var length   = 0.6f;
-            
-            var right  = Vector3.Cross(characterBody.velocity.normalized, Vector3.up);
-
-            // Check whether character has any surfaces
-            // it can perform wall movement on
-            var rightCheck = InternalCheck(right);
-            var leftCheck  = InternalCheck(-right);
-
-            return (rightCheck || leftCheck) && !(rightCheck && leftCheck);
-
-            
-            bool InternalCheck(Vector3 direction)
-            {
-                if (Physics.Raycast(position, direction, out var hit, length))
-                {
-                    this.Log().Debug($"Can run on wall: {hit.collider.gameObject.name}");
-
-                    var angle = Vector3.SignedAngle(hit.normal, -direction, Vector3.up);
-
-                    // Check if character approached the wall withing snapping threshold
-                    // and is running at or above the required minimum speed
-                    if (Mathf.Abs(angle) < maxWallHandlingAngle && characterBody.velocity.magnitude > wallRunRequiredMinSpeed)
-                    {
-                        GizmoDrawer.Draw(new LineGizmo(position, position + length * direction, Color.green), 20);
-                        return true;
-                    }
-                    
-                    GizmoDrawer.Draw(new LineGizmo(position, position + length * direction, Color.blue), 20);
-                    return false;
-                }
-            
-                GizmoDrawer.Draw(new LineGizmo(position, position + length * direction, Color.red), 20);
-
-                return false;
-            }
+            return projectedForward.normalized;
         }
         
-        private bool ShouldSwitchToDefault()
+        public override Vector3 GetRight()
         {
-            if (currentMovementMode == MovementMode.WallMovement && groundChecker.Grounded)
+            var right = Vector3.Cross(Vector3.up, GetForward());
+
+            return right;
+        }
+
+        private bool ShouldEnterWallMovement()
+        {
+            // If player is grounded or is already in wall movement mode, cannot switch to wall movement
+            if (context.grounded || currentMovementMode == MovementMode.WallMovement)
+                return false;
+
+            var right  = GetRight();
+            var length = characterCollider.radius + 0.02f;
+            
+            var position = characterBody.position;
+
+            var rightResult = Raycast(right);
+            var leftResult  = Raycast(-right);
+
+            GizmoDrawer.Draw(new LineGizmo(position, position + right * length, rightResult.success ? Color.green : Color.red));
+            GizmoDrawer.Draw(new LineGizmo(position, position - right * length, leftResult.success ? Color.green : Color.red));
+
+            // Cannot snap to wall if cornered or in a tight place
+            if (rightResult.success && leftResult.success)
+                return false;
+
+            if (rightResult.success)
             {
-                this.Log().Debug("Should move in default mode");
+                context.wallNormal   = rightResult.hit.normal;
+                context.wallDistance = rightResult.hit.distance;
+                
+                return true;
+            }
+            
+            if (leftResult.success)
+            {
+                context.wallNormal   = leftResult.hit.normal;
+                context.wallDistance = leftResult.hit.distance;
+                
                 return true;
             }
 
             return false;
+
+
+            (bool success, RaycastHit hit) Raycast(Vector3 direction)
+            {
+                if (Physics.Raycast(position, direction, out var hit, length, wallLayers.value))
+                {
+                    return (true, hit);
+                }
+                
+                return (false, default);
+            }
         }
 
-        public bool Grounded => groundChecker.Grounded;
+        private bool ShouldLeaveWallMovement()
+        {
+            return (context.grounded || context.falling) && currentMovementMode == MovementMode.WallMovement;
+        }
+
+        public bool Grounded => (currentMovementMode == MovementMode.Humanoid && context.grounded) || 
+                                (currentMovementMode == MovementMode.WallMovement && !context.falling);
     }
 }

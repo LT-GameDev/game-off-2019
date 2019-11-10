@@ -14,38 +14,24 @@ namespace Game.Utility
 
         public void Check(Vector3 position, float halfHeight, float radius)
         {
-            if (Physics.SphereCast(position, radius, -Vector3.up, out var hit, maxDistance, layerMask.value))
+            if (Physics.SphereCast(position, radius, Physics.gravity.normalized, out var hit, maxDistance, layerMask.value))
             {
                 if (hit.distance < halfHeight + 0.1f)
                 {
                     Grounded = true;
                     Distance = 0;
                     Normal   = hit.normal;
+                    
+                    return;
                 }
-                else
-                {
-                    Grounded = false;
-                    Distance = hit.distance;
-                }
-            }
-        }
+                
+                Grounded = false;
+                Distance = hit.distance;
 
-        public void Check(Vector3 position, float halfHeight, float radius, Vector3 up)
-        {
-            if (Physics.SphereCast(position, radius, -up, out var hit, maxDistance, layerMask.value))
-            {
-                if (hit.distance < halfHeight + 0.1f)
-                {
-                    Grounded = true;
-                    Distance = 0;
-                    Normal   = hit.normal;
-                }
-                else
-                {
-                    Grounded = false;
-                    Distance = hit.distance;
-                }
+                return;
             }
+
+            Grounded = false;
         }
 
         public bool Grounded { get; private set; }
