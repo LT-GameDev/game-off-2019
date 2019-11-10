@@ -54,10 +54,7 @@ namespace Game.Components.Movement
             var newClimbVelocity = Vector3.up * Mathf.Clamp(upwardsVector - deltaGravity, -float.MaxValue, climbVelocity);
             var existingVelocity = movementContext.body.velocity;
             
-            var groundVelocity = Vector3.Scale(GameWorld.GetGroundPlane(), existingVelocity);
-            this.Log().Debug($"ground velocity: {groundVelocity} ({groundVelocity.magnitude})");
-
-            if (groundVelocity.magnitude < minRequiredSpeed)
+            if (Vector3.Scale(GameWorld.GetGroundPlane(), existingVelocity).magnitude < minRequiredSpeed)
             {
                 movementContext.falling = true;
                 return;

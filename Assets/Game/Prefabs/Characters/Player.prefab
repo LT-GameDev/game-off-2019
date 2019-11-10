@@ -103,7 +103,7 @@ MonoBehaviour:
   wallMovement:
     minRequiredSpeed: 6
     climbVelocity: 3
-    fallAcceleration: 1.6333333
+    fallAcceleration: 3
     rotationSpeed: 12
 --- !u!114 &1154736888894761876
 MonoBehaviour:

@@ -198,6 +198,7 @@ namespace Game.Components.Movement
             return (context.grounded || context.falling) && currentMovementMode == MovementMode.WallMovement;
         }
 
-        public bool Grounded => context.grounded;
+        public bool Grounded => (currentMovementMode == MovementMode.Humanoid && context.grounded) || 
+                                (currentMovementMode == MovementMode.WallMovement && !context.falling);
     }
 }
