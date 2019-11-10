@@ -67,12 +67,12 @@ namespace Game.Components.Movement
 
                 gravityComponent = gravityComponent.normalized * newGravitySpeed;
             }
+
+            var meshRotation  = meshRoot.rotation;
+            var lookDirection = direction.magnitude > 0.1f ? direction : meshRotation * Vector3.forward;
             
-            if (direction.magnitude > 0.1f)
-            {
-                var lookRotation  = Quaternion.LookRotation(direction, rotation * Vector3.up);   
-                meshRoot.rotation = Quaternion.Lerp(meshRoot.rotation, lookRotation, lookSpeed * GetControlFactor() * deltaTime);
-            }
+            var lookRotation  = Quaternion.LookRotation(lookDirection, rotation * Vector3.up);   
+            meshRoot.rotation = Quaternion.Lerp(meshRotation, lookRotation, lookSpeed * GetControlFactor() * deltaTime);
             
             body.velocity = meshRoot.rotation * Vector3.forward * newSpeed + gravityComponent;
         }

@@ -38,6 +38,12 @@ namespace Game.Components.Movement
         {
             if (movementContext.falling)
                 return;
+
+            if (!movementContext.sprint)
+            {
+                movementContext.falling = true;
+                return;
+            }
             
             var result = Raycast();
 
