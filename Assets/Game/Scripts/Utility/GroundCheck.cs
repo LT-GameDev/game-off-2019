@@ -21,13 +21,17 @@ namespace Game.Utility
                     Grounded = true;
                     Distance = 0;
                     Normal   = hit.normal;
+                    
+                    return;
                 }
-                else
-                {
-                    Grounded = false;
-                    Distance = hit.distance;
-                }
+                
+                Grounded = false;
+                Distance = hit.distance;
+
+                return;
             }
+
+            Grounded = false;
         }
 
         public bool Grounded { get; private set; }

@@ -21,11 +21,6 @@ namespace Game.Utility
 
         private void OnDrawGizmos()
         {
-            #if UNITY_EDITOR
-            if (EditorApplication.isPaused)
-                return;
-            #endif
-            
             // Draw pinned gizmos
             foreach (var gizmo in pinnedGizmos)
             {
@@ -38,6 +33,12 @@ namespace Game.Utility
                 var entry = tempGizmos[i];
 
                 entry.gizmo.Draw();
+                
+#if UNITY_EDITOR
+                if (EditorApplication.isPaused)
+                    continue;
+#endif
+                
                 entry.frames--;
 
                 if (entry.frames < 1)

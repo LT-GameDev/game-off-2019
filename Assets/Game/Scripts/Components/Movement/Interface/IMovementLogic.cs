@@ -4,6 +4,7 @@ namespace Game.Components.Movement.Interface
 {
     public interface IMovementLogic
     {
+        void WarmUp();
         void Run(float deltaTime);
     }
 

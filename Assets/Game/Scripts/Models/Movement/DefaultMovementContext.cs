@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace DefaultNamespace
+namespace Game.Models.Movement
 {
     public class DefaultMovementContext
     {

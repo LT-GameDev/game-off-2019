@@ -1,8 +1,8 @@
 ﻿#pragma warning disable 649
 
 using System;
-using DefaultNamespace;
 using Game.Components.Movement.Interface;
+using Game.Models.Movement;
 using Game.Utility;
 using UnityEngine;
 
@@ -28,6 +28,11 @@ namespace Game.Components.Movement
         public void Initialize(DefaultMovementContext context)
         {
             movementContext = context;
+        }
+
+        public void WarmUp()
+        {
+            movementContext.body.useGravity = true;
         }
 
         public void Run(float deltaTime)

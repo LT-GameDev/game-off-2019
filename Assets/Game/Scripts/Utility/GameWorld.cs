@@ -1,9 +1,11 @@
-﻿using UnityEngine;
+﻿#pragma warning disable 649
+
+using UnityEngine;
 using static UnityEngine.Mathf;
 
 namespace Game.Utility
 {
-    public static class GameWorld
+    public class GameWorld
     {
         public static Vector3 GetGroundPlane() => Vector3.one - GetGravityAxis();
 
