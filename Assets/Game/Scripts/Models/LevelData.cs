@@ -1,8 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Models
 {
+    [Serializable]
     public struct LevelData
     {
         public List<int> zones;

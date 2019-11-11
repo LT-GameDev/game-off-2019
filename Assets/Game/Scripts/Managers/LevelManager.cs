@@ -70,6 +70,11 @@ namespace Game.Managers
 
         public (int levelId, LevelData levelData) GetLevelData()
         {
+            var playerTransform = player.transform;
+
+            levelData.playerPosition = playerTransform.position;
+            levelData.playerRotation = playerTransform.rotation.eulerAngles;
+            
             return (thisLevelId, levelData);
         }
 

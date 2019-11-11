@@ -24,6 +24,7 @@ namespace Game
             serviceContainer = new ServiceContainer();
             
             serviceContainer.AddService(new GameSceneManager());
+            serviceContainer.AddService(new PersistenceManager());
         }
 
         public void StartGame()
@@ -41,11 +42,13 @@ namespace Game
         {
             // TODO: Open loading view
 
-            var persistedLevelId = level1;        // TODO: Dummy, load from actual data here...
-            var loadedLevelData  = new LevelData();
-            
-            GetService<GameSceneManager>().LoadLevel(persistedLevelId, loadedLevelData, OnLoaded);
-            
+            GetService<PersistenceManager>().Load(OnPersistentData, StartGame);
+
+
+            void OnPersistentData(SaveData saveData)
+            {
+                GetService<GameSceneManager>().LoadLevel(saveData.levelId, saveData.levelData, OnLoaded);
+            }
 
             void OnLoaded()
             {   
@@ -59,10 +62,12 @@ namespace Game
             
             var data = FindObjectOfType<LevelManager>().GetLevelData();
 
-            var levelId   = data.levelId;
-            var levelData = data.levelData;
+            var saveData = new SaveData();
 
-            // Asyncronously save data...
+            saveData.levelId   = data.levelId;
+            saveData.levelData = data.levelData;
+
+            GetService<PersistenceManager>().Save(saveData);
         }
 
         public void QuitGame()
