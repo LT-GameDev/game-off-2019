@@ -37,7 +37,7 @@ namespace Game.Managers
             
             void OnZoneLoaded()
             {
-                PlacePlayer();
+                PlacePlayer(playerStartPosition.position, playerStartPosition.rotation);
                 
                 initializationComplete?.Invoke();
             }
@@ -60,7 +60,7 @@ namespace Game.Managers
 
                     if (loadOps < 1)
                     {
-                        PlacePlayer();
+                        PlacePlayer(levelData.playerPosition, Quaternion.Euler(levelData.playerRotation));
                         
                         initializationComplete?.Invoke();
                     }
@@ -113,12 +113,12 @@ namespace Game.Managers
             }
         }
 
-        private void PlacePlayer()
+        private void PlacePlayer(Vector3 startPosition, Quaternion startRotation)
         {
             var playerTransform = player.transform;
                 
-            playerTransform.position = playerStartPosition.position;
-            playerTransform.rotation = playerStartPosition.rotation;
+            playerTransform.position = startPosition;
+            playerTransform.rotation = startRotation;
         }
     }
 }
