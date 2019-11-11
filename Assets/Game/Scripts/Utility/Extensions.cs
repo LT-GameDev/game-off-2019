@@ -1,4 +1,6 @@
-﻿namespace Game.Utility
+﻿using UnityEngine;
+
+namespace Game.Utility
 {
     public static class Extensions
     {
