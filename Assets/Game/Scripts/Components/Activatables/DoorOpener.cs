@@ -30,18 +30,30 @@ namespace Game.Components.Activatables
             isOpen = state;
         }
 
-        // Update is called once per frame
+
         void Update()
         {
-            if (isOpen)
+            if (gameObject.tag == "SlidingDoor") // Opens GameObjects with tag Sliding Door
             {
-                Quaternion targetRotation = Quaternion.Euler(0, 0, doorOpenAngle);
-                transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
+                if (isOpen)
+                {
+                }
+                else
+                {
+                }
             }
-            else
+            else // Opens GameObjects with other tags (Basic Door)
             {
-                Quaternion targetRotation2 = Quaternion.Euler(0, 0, doorCloseAngle);
-                transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation2, smooth * Time.deltaTime);
+                if (isOpen)
+                {
+                    Quaternion targetRotation = Quaternion.Euler(0, doorOpenAngle, 0);
+                    transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
+                }
+                else
+                {
+                    Quaternion targetRotation2 = Quaternion.Euler(0, doorCloseAngle, 0);
+                    transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation2, smooth * Time.deltaTime);
+                }
             }
         }
     }
