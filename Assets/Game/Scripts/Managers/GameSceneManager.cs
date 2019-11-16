@@ -12,10 +12,20 @@ namespace Game.Managers
 
         public void LoadSync(int levelId)
         {
-            SceneManager.LoadScene(levelId, LoadSceneMode.Single);
-            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(levelId));
+            SceneManager.LoadScene(levelId, LoadSceneMode.Additive);
+            SceneManager.sceneLoaded += InlineSceneLoaded;
 
-            levelsInitialized = true;
+
+            void InlineSceneLoaded(Scene scene, LoadSceneMode mode)
+            {
+                if (levelId != scene.buildIndex)
+                    return;
+                
+                SceneManager.sceneLoaded -= InlineSceneLoaded;
+                SceneManager.SetActiveScene(scene);
+
+                levelsInitialized = true;
+            }
         }
         
         public void LoadLevel(int levelId, Action onComplete)

@@ -7,11 +7,18 @@ namespace Game.Utility
 {
     public class SelectSelectable : MonoBehaviour
     {
-        [SerializeField] private Selectable selectable;
-        
         private void OnEnable()
         {
-            selectable.Select();
+            var selectables = GetComponentsInChildren<Selectable>();
+
+            foreach (var selectable in selectables)
+            {
+                if (selectable.enabled)
+                {
+                    selectable.Select();
+                    return;
+                }
+            }
         }
     }
 }

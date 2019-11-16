@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 649
 
 using System;
+using System.Collections;
 using System.Threading.Tasks;
 using Game.Components;
 using Game.Containers;
@@ -18,11 +19,16 @@ namespace Game
     
         [Header("Levels")]
         [SerializeField] private int level1;
+
+        [Header("General Purpose UI")] 
+        [SerializeField] private GameObject loadingView;
         
         private ServiceContainer serviceContainer;
 
         private void Awake()
         {
+            Application.backgroundLoadingPriority = ThreadPriority.Low;
+            
             ConfigureServices();
             
             GetService<GameSceneManager>().LoadSync(mainMenu);
@@ -38,20 +44,27 @@ namespace Game
 
         public void StartGame()
         {
-            GetService<GameSceneManager>().LoadLevel(level1, OnLoaded);
-            
+            loadingView.SetActive(true);
+
+            StartCoroutine(LoadLevelDelayed());
 
             void OnLoaded()
             {   
-                // TODO: Close loading view
+                loadingView.SetActive(false);
+            }
+
+            IEnumerator LoadLevelDelayed()
+            {
+                yield return new WaitForSeconds(0.3f);
+                GetService<GameSceneManager>().LoadLevel(level1, OnLoaded);
             }
         }
 
         public void ContinueGame()
         {
-            // TODO: Open loading view
+            loadingView.SetActive(true);
 
-            GetService<PersistenceManager>().Load(OnPersistentData, StartGame);
+            StartCoroutine(LoadLevelDelayed());
 
 
             void OnPersistentData(SaveData saveData)
@@ -60,8 +73,14 @@ namespace Game
             }
 
             void OnLoaded()
-            {   
-                // TODO: Close loading view
+            {
+                loadingView.SetActive(false);
+            }
+
+            IEnumerator LoadLevelDelayed()
+            {
+                yield return new WaitForSeconds(0.3f);
+                GetService<PersistenceManager>().Load(OnPersistentData, StartGame);
             }
         }
 
