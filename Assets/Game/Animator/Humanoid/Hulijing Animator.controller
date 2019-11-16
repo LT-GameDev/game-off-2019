@@ -728,7 +728,7 @@ AnimatorState:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Sprinting
-  m_Speed: 2.5
+  m_Speed: 1.4
   m_CycleOffset: 0
   m_Transitions:
   - {fileID: 4889359911050659342}
@@ -743,7 +743,7 @@ AnimatorState:
   m_MirrorParameterActive: 0
   m_CycleOffsetParameterActive: 0
   m_TimeParameterActive: 0
-  m_Motion: {fileID: 7400004, guid: a375b4ea31a4f9f4b8461fc227ae605e, type: 3}
+  m_Motion: {fileID: 7400000, guid: dc35877476fc0f744a0c162aef427653, type: 2}
   m_Tag: 
   m_SpeedParameter: 
   m_MirrorParameter: 
