@@ -33,7 +33,7 @@ namespace Game.Components
             input.Player.Sprint.started  += _ => SetSprinting(true);
             input.Player.Sprint.canceled += _ => SetSprinting(false);
 
-            input.Player.Jump.performed += _ => movementController.Jump();
+            input.Player.Jump.performed += _ => Jump();
 
             input.Player.Interact.performed += _ => interactor.Interact();
 
@@ -67,6 +67,13 @@ namespace Game.Components
         private void SetSprinting(bool state)
         {
             movementController.SetSprinting(animationController.Context.Sprinting = state);
+        }
+
+        private void Jump()
+        {
+            movementController.Jump();
+
+            animationController.Context.Jump = true;
         }
 
         private void Dash()

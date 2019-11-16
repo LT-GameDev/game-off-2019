@@ -8,6 +8,7 @@ namespace Game.Models.Animations
         private bool walking;
         private bool sprinting;
         private bool loco;
+        private bool jump;
         
         private Action updated;
 
@@ -53,6 +54,25 @@ namespace Game.Models.Animations
                     return;
 
                 loco = value;
+                
+                updated?.Invoke();
+            }
+        }
+
+        public bool Jump
+        {
+            get
+            {
+                var state = jump;
+                jump = false;
+                return state;
+            }
+            set
+            {
+                if (jump == value)
+                    return;
+
+                jump = value;
                 
                 updated?.Invoke();
             }

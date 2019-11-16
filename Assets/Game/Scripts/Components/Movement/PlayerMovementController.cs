@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 649
 
 using System;
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using Game.Cameras;
@@ -34,6 +35,7 @@ namespace Game.Components.Movement
         private MovementMode currentMovementMode;
         private IMovementLogic currentMovementLogic;
         private PlayerMovementContext context;
+        private Coroutine delayedJump;
 
         private Dictionary<MovementMode, IMovementLogic> movementModes;
 
@@ -76,7 +78,21 @@ namespace Game.Components.Movement
 
         public void Jump()
         {
-            context.jump = true;
+            if (characterBody.velocity.magnitude < 0.1f && delayedJump == null)
+            {
+                delayedJump = StartCoroutine(DelayedJump());
+                
+                IEnumerator DelayedJump()
+                {
+                    yield return new WaitForSeconds(0.5f);
+                    context.jump = true;
+                    delayedJump = null;
+                }   
+            }
+            else
+            {
+                context.jump = true;
+            }
         }
 
         public void SetSprinting(bool sprinting)
