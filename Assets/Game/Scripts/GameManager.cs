@@ -14,6 +14,8 @@ namespace Game
 {
     public class GameManager : MonoBehaviour, IServiceContainer
     {
+        [SerializeField] private int mainMenu;
+    
         [Header("Levels")]
         [SerializeField] private int level1;
         
@@ -21,8 +23,15 @@ namespace Game
 
         private void Awake()
         {
-            serviceContainer = new ServiceContainer();
+            ConfigureServices();
             
+            GetService<GameSceneManager>().LoadSync(mainMenu);
+        }
+
+        private void ConfigureServices()
+        {
+            serviceContainer = new ServiceContainer();
+
             serviceContainer.AddService(new GameSceneManager());
             serviceContainer.AddService(new PersistenceManager());
         }

@@ -9,6 +9,14 @@ namespace Game.Managers
     public class GameSceneManager
     {
         private bool levelsInitialized;
+
+        public void LoadSync(int levelId)
+        {
+            SceneManager.LoadScene(levelId, LoadSceneMode.Single);
+            SceneManager.SetActiveScene(SceneManager.GetSceneByBuildIndex(levelId));
+
+            levelsInitialized = true;
+        }
         
         public void LoadLevel(int levelId, Action onComplete)
         {
