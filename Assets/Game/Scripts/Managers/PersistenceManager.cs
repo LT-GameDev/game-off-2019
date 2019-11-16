@@ -1,6 +1,7 @@
-﻿using System;
+﻿#pragma warning disable 649
+
+using System;
 using System.IO;
-using System.Threading.Tasks;
 using Game.Models;
 using UnityEngine;
 
