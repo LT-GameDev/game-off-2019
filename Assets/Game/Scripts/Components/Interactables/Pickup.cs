@@ -1,28 +1,32 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿#pragma warning disable 649
+
+using Game.Enums;
 using Game.Interactions;
+using Game.Utility;
 using UnityEngine;
 
 namespace Game.Components.Interactables
 {
-    public class DummyInteractable : MonoBehaviour, IInteractable
+    public class Pickup : MonoBehaviour, IInteractable
     {
         public int GetInteractionType()
         {
-            throw new System.NotImplementedException();
+            return (int) PlayerInteractions.Pickup;
         }
 
         public void Notify(bool notifiedState)
         {
             if (notifiedState)
             {
-                Debug.Log($"Press 'F' to destroy {gameObject.name}");
+                this.Log().Debug($"Press 'F' to pickup");
             }
         }
 
         public void Interact()
         {
-            Destroy(gameObject);
+            // Add item to player inventory
+            
+            gameObject.SetActive(false);
         }
     }
 }

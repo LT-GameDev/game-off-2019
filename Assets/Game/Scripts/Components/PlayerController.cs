@@ -3,6 +3,7 @@
 using Game.Components.Movement;
 using Game.Components.Abilities;
 using Game.Components.Animations;
+using Game.Enums;
 using UnityEngine;
 
 namespace Game.Components
@@ -18,8 +19,8 @@ namespace Game.Components
         [SerializeField] private Dash dash;
 
         private PlayerInput input;
-
         private Vector2 playerInput;
+        private bool inputBlocked;
 
         private void Awake()
         {
@@ -35,7 +36,7 @@ namespace Game.Components
 
             input.Player.Jump.performed += _ => Jump();
 
-            input.Player.Interact.performed += _ => interactor.Interact();
+            input.Player.Interact.performed += _ => Interact();
 
             input.Player.Dash.performed += _ => Dash();
         }
@@ -43,10 +44,19 @@ namespace Game.Components
         private void OnEnable()
         {
             input.Player.Enable();
+            
+            animationController.BecomeBusy   += OnBecomeBusy;
+            animationController.NoLongerBusy += OnBecomeFree;
         }
 
         private void Update()
         {
+            if (inputBlocked)
+            {
+                animationController.Context.Loco = false;
+                return;
+            }
+            
             movementController.Move(playerInput);
 
             animationController.Context.Loco = playerInput.magnitude > 0.1f && movementController.Grounded;
@@ -55,6 +65,9 @@ namespace Game.Components
         private void OnDisable()
         {
             input.Player.Disable();
+            
+            animationController.NoLongerBusy -= OnBecomeFree;
+            animationController.BecomeBusy   -= OnBecomeBusy;
         }
 
         private void ToggleWalking()
@@ -71,6 +84,9 @@ namespace Game.Components
 
         private void Jump()
         {
+            if (inputBlocked)
+                return;
+                
             movementController.Jump();
 
             animationController.Context.Jump = true;
@@ -78,11 +94,36 @@ namespace Game.Components
 
         private void Dash()
         {
+            if (inputBlocked)
+                return;
+            
             if (dash.enabled)
                 return;
             
             movementController.enabled = false;
             dash.Use(faceCameraDirection.Direction, () => movementController.enabled = true, null);
+        }
+
+        private void Interact()
+        {
+            var interactionType = interactor.Interact();
+
+            switch (interactionType)
+            {
+                case (int) PlayerInteractions.Pickup:
+                    animationController.Context.Pickup = true;
+                    break;
+            }
+        }
+
+        private void OnBecomeBusy()
+        {
+            inputBlocked = true;
+        }
+
+        private void OnBecomeFree()
+        {
+            inputBlocked = false;
         }
     }
 }

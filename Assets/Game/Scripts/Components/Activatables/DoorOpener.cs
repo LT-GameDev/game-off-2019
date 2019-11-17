@@ -14,6 +14,11 @@ namespace Game.Components.Activatables
         public float doorCloseAngle = 0f;
         public bool isOpen = false;
 
+        public int GetInteractionType()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public void Notify(bool notifiedState)
         {
             if (notifiedState)

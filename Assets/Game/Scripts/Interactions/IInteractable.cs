@@ -2,6 +2,8 @@
 {
     public interface IInteractable
     {
+        int GetInteractionType();
+        
         /// <summary>
         /// This method is used to notify interactable specific actions
         /// such as displaying interaction view with action text

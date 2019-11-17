@@ -9,6 +9,11 @@ public class Button : MonoBehaviour, IInteractable
     public bool isPressed = false;
     public DoorOpener isOpened;
 
+    public int GetInteractionType()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void Notify(bool notifiedState)
     {
         if (notifiedState)

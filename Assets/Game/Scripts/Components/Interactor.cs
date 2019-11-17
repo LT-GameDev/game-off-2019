@@ -13,12 +13,14 @@ namespace Game.Components
         
         private IInteractable interactable;
 
-        public void Interact()
+        public int Interact()
         {
             if (interactable.IsNull())
-                return;
+                return -1;
             
             interactable.Interact();
+
+            return interactable.GetInteractionType();
         }
         
         private void OnTriggerEnter(Collider collider)
