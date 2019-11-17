@@ -271,13 +271,13 @@ MonoBehaviour:
     amplitudeGain: 0
     frequencyGain: 0
   walkingNoise:
-    amplitudeGain: 0.42
+    amplitudeGain: 0.25
     frequencyGain: 2.5
   runningNoise:
-    amplitudeGain: 0.55
+    amplitudeGain: 0.35
     frequencyGain: 3
   sprintingNoise:
-    amplitudeGain: 0.7
+    amplitudeGain: 0.5
     frequencyGain: 3.5
 --- !u!1 &6460768252314275733
 GameObject:
@@ -417,7 +417,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: a3dacaec0287d7444b4bd276816e1666, type: 2}
+  m_NoiseProfile: {fileID: 11400000, guid: fea9a060985436d4cb3133c8edf2b319, type: 2}
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
   mNoiseOffsets: {x: 0, y: 0, z: 0}
@@ -633,7 +633,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: a3dacaec0287d7444b4bd276816e1666, type: 2}
+  m_NoiseProfile: {fileID: 11400000, guid: fea9a060985436d4cb3133c8edf2b319, type: 2}
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
   mNoiseOffsets: {x: 0, y: 0, z: 0}
@@ -953,7 +953,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_NoiseProfile: {fileID: 11400000, guid: a3dacaec0287d7444b4bd276816e1666, type: 2}
+  m_NoiseProfile: {fileID: 11400000, guid: fea9a060985436d4cb3133c8edf2b319, type: 2}
   m_AmplitudeGain: 0
   m_FrequencyGain: 0
   mNoiseOffsets: {x: 0, y: 0, z: 0}
