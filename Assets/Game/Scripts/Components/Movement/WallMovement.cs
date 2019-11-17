@@ -44,16 +44,6 @@ namespace Game.Components.Movement
                 return;
             }
 
-            if (movementContext.jumpOff)
-            {
-                var groundPlacneVelocity = Vector3.Scale(new Vector3(1, 0, 1), movementContext.body.velocity);
-                var jumpOffUpRotation    = Quaternion.LookRotation(groundPlacneVelocity.normalized, Vector3.up);
-            
-                movementContext.meshRoot.rotation = Quaternion.Lerp(movementContext.meshRoot.rotation, jumpOffUpRotation, rotationSpeed * deltaTime);
-                
-                return;
-            }
-
             if (!movementContext.sprint)
             {
                 movementContext.falling = true;
@@ -90,6 +80,16 @@ namespace Game.Components.Movement
             if (Vector3.Scale(GameWorld.GetGroundPlane(), existingVelocity).magnitude < minRequiredSpeed)
             {
                 movementContext.falling = true;
+                return;
+            }
+
+            if (movementContext.jumpOff)
+            {
+                var groundPlacneVelocity = Vector3.Scale(new Vector3(1, 0, 1), movementContext.body.velocity);
+                var jumpOffUpRotation    = Quaternion.LookRotation(groundPlacneVelocity.normalized, Vector3.up);
+            
+                movementContext.meshRoot.rotation = Quaternion.Lerp(movementContext.meshRoot.rotation, jumpOffUpRotation, rotationSpeed * deltaTime);
+                
                 return;
             }
             
