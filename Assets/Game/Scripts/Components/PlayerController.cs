@@ -51,11 +51,11 @@ namespace Game.Components
 
         private void Update()
         {
-            if (inputBlocked)
+            {if (inputBlocked)
             {
                 animationController.Context.Loco = false;
                 return;
-            }
+            }}
             
             movementController.Move(playerInput);
 

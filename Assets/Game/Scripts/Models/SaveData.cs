@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Game.Models
@@ -8,5 +9,6 @@ namespace Game.Models
     {
         public int levelId;
         public LevelData levelData;
+        public List<int> items;
     }
 }

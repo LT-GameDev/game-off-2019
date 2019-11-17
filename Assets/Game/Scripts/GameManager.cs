@@ -1,15 +1,13 @@
 ﻿#pragma warning disable 649
 
-using System;
 using System.Collections;
-using System.Threading.Tasks;
-using Game.Components;
+using System.Collections.Generic;
+using System.Linq;
 using Game.Containers;
 using Game.Managers;
 using Game.Models;
-using UniRx;
+using Game.Models.Inventory;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Game
 {
@@ -19,6 +17,9 @@ namespace Game
     
         [Header("Levels")]
         [SerializeField] private int level1;
+
+        [Header("Data")] 
+        [SerializeField] private ItemDatabase items;
 
         [Header("General Purpose UI")] 
         [SerializeField] private GameObject loadingView;
@@ -40,14 +41,17 @@ namespace Game
 
             serviceContainer.AddService(new GameSceneManager());
             serviceContainer.AddService(new PersistenceManager());
+            serviceContainer.AddService(new InventoryManager());
         }
 
         public void StartGame()
         {
             loadingView.SetActive(true);
-
+            
+            GetService<InventoryManager>().InitializeInventory();
             StartCoroutine(LoadLevelDelayed());
 
+            
             void OnLoaded()
             {   
                 loadingView.SetActive(false);
@@ -70,6 +74,7 @@ namespace Game
             void OnPersistentData(SaveData saveData)
             {
                 GetService<GameSceneManager>().LoadLevel(saveData.levelId, saveData.levelData, OnLoaded);
+                GetService<InventoryManager>().InitializeInventory(saveData.items.Select(id => items.GetById(id)).ToList());
             }
 
             void OnLoaded()
@@ -88,12 +93,14 @@ namespace Game
         {
             // TODO: display save game indicator
             
-            var data = FindObjectOfType<LevelManager>().GetLevelData();
+            var levelData = FindObjectOfType<LevelManager>().GetLevelData();
+            var itemsData = GetService<InventoryManager>().GetItems();
 
             var saveData = new SaveData();
-
-            saveData.levelId   = data.levelId;
-            saveData.levelData = data.levelData;
+                
+            saveData.levelId   = levelData.levelId;
+            saveData.levelData = levelData.levelData;
+            saveData.items     = itemsData.Select(item => item.ItemId).ToList();
 
             GetService<PersistenceManager>().Save(saveData);
         }
