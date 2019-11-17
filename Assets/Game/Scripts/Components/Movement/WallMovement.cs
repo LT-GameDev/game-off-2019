@@ -15,7 +15,6 @@ namespace Game.Components.Movement
         [SerializeField] private float climbVelocity;
         [SerializeField] private float fallAcceleration;
         [SerializeField] private float rotationSpeed;
-        [SerializeField] private float jumpPower;
         
         private PlayerMovementContext movementContext;
         private Vector3 previousNormal;
@@ -33,26 +32,12 @@ namespace Game.Components.Movement
             
             previousNormal = movementContext.wallNormal;
             upwardsVector  = climbVelocity;
-
-            movementContext.jumpOff = false;
         }
 
         public void Run(float deltaTime)
         {
             if (movementContext.falling)
-            {
                 return;
-            }
-
-            if (movementContext.jumpOff)
-            {
-                var groundPlacneVelocity = Vector3.Scale(new Vector3(1, 0, 1), movementContext.body.velocity);
-                var jumpOffUpRotation    = Quaternion.LookRotation(groundPlacneVelocity.normalized, Vector3.up);
-            
-                movementContext.meshRoot.rotation = Quaternion.Lerp(movementContext.meshRoot.rotation, jumpOffUpRotation, rotationSpeed * deltaTime);
-                
-                return;
-            }
 
             if (!movementContext.sprint)
             {
@@ -65,18 +50,6 @@ namespace Game.Components.Movement
             if (!result.success)
             {
                 movementContext.falling = true;
-                return;
-            }
-
-            if (movementContext.jump)
-            {
-                var velocity          = movementContext.body.velocity;
-                var velocityDirection = (movementContext.wallNormal + velocity.normalized + 0.5f * climbVelocity * Vector3.up).normalized;
-                
-                movementContext.body.AddForce(velocityDirection * jumpPower, ForceMode.VelocityChange);
-                movementContext.body.useGravity = true;
-
-                movementContext.jumpOff = true;
                 return;
             }
 
