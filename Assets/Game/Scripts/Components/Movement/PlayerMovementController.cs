@@ -277,10 +277,10 @@ namespace Game.Components.Movement
 
         private bool ShouldLeaveWallMovement()
         {
-            return (context.grounded || context.falling) && currentMovementMode == MovementMode.WallMovement;
+            return context.grounded && currentMovementMode == MovementMode.WallMovement;
         }
 
         public bool Grounded => (currentMovementMode == MovementMode.Humanoid && context.grounded) || 
-                                (currentMovementMode == MovementMode.WallMovement && !context.falling);
+                                (currentMovementMode == MovementMode.WallMovement && !context.falling && !context.jumpOff);
     }
 }

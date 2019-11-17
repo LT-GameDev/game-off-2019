@@ -741,6 +741,7 @@ MonoBehaviour:
     climbVelocity: 3
     fallAcceleration: 3
     rotationSpeed: 12
+    jumpPower: 6
 --- !u!114 &1154736888894761876
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1642,6 +1643,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   targetAnimator: {fileID: 8597193165942363841}
+  busyStates: 000000000500000006000000
 --- !u!114 &7517956479332153194
 MonoBehaviour:
   m_ObjectHideFlags: 0

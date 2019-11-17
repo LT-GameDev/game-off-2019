@@ -51,12 +51,6 @@ namespace Game.Components
 
         private void Update()
         {
-            {if (inputBlocked)
-            {
-                animationController.Context.Loco = false;
-                return;
-            }}
-            
             movementController.Move(playerInput);
 
             animationController.Context.Loco = playerInput.magnitude > 0.1f && movementController.Grounded;
