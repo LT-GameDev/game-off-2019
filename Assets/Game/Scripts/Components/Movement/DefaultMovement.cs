@@ -18,6 +18,8 @@ namespace Game.Components.Movement
         [SerializeField] private float jumpPower;
         [SerializeField] private float maxSpeed;
         [SerializeField] private float airControl;
+        [SerializeField] private float walkingFactor;
+        [SerializeField] private float sprintingFactor;
         
         [Header("Damping")]
         [SerializeField] private float lookSpeed;
@@ -90,10 +92,10 @@ namespace Game.Components.Movement
         private float GetSpeedLimit()
         {
             if (movementContext.sprint)
-                return maxSpeed * 1.7f;
+                return maxSpeed * sprintingFactor;
 
             if (movementContext.walk)
-                return maxSpeed * 0.5f;
+                return maxSpeed * walkingFactor;
 
             return maxSpeed;
         }

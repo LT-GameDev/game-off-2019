@@ -17,8 +17,25 @@ namespace Game.Components.Movement
         WallMovement
     }
 
+    public enum CharacterMovementState
+    {
+        Falling,
+        Idle,
+        Walking,
+        Running,
+        Sprinting,
+        WallSprinting,
+        Jumping
+    }
+
     public class PlayerMovementController : MovementController
     {
+        public event Action Falling;
+        public event Action Idle;
+        public event Action Walking;
+        public event Action Running;
+        public event Action Sprinting;
+        
         [Header("Properties")]
         [SerializeField] private Transform childMeshRoot;
         [SerializeField] private Rigidbody characterBody;
@@ -32,12 +49,14 @@ namespace Game.Components.Movement
         [SerializeField] private WallMovement wallMovement;
 
         private Transform myTransform;
-        private MovementMode currentMovementMode;
-        private IMovementLogic currentMovementLogic;
         private PlayerMovementContext context;
         private Coroutine delayedJump;
+        private IMovementLogic currentMovementLogic;
+        private MovementMode currentMovementMode;
 
         private Dictionary<MovementMode, IMovementLogic> movementModes;
+
+        private bool wasMoving;
 
         private void Awake()
         {
@@ -57,6 +76,8 @@ namespace Game.Components.Movement
             defaultMovement.Initialize(context);
             wallMovement.Initialize(context);
 
+            State = CharacterMovementState.Idle;
+
             SwitchMode(default);
         }
 
@@ -64,6 +85,7 @@ namespace Game.Components.Movement
         {
             GlobalGroundCheck();
             ManageTransitions();
+            ManageStates();
             
             currentMovementLogic?.Run(Time.fixedDeltaTime);
 
@@ -143,6 +165,48 @@ namespace Game.Components.Movement
             this.Log().Debug($"Switch to {mode} movement!", nameof(SwitchMode));
         }
 
+        private void ManageStates()
+        {
+            if (characterBody.velocity.magnitude > 0.1f)
+            {
+                // Set Loco State if character is moving
+                SetLocoState();
+            }
+            else
+            {
+                if (groundChecker.Distance <= 10f)
+                {
+                    State = CharacterMovementState.Idle;
+                    Idle?.Invoke();
+                }
+                else
+                {
+                    State = CharacterMovementState.Falling;
+                    Falling?.Invoke();
+                }
+            }
+
+
+            void SetLocoState()
+            {
+                if (context.sprint && State != CharacterMovementState.Sprinting)     // Change state to sprinting
+                {
+                    State = CharacterMovementState.Sprinting;
+                    Sprinting?.Invoke();
+                }
+                else if (context.walk && State != CharacterMovementState.Walking && State != CharacterMovementState.Sprinting)    // Change state to walking
+                {
+                    State = CharacterMovementState.Walking;
+                    Walking?.Invoke();
+                }
+                else if (State != CharacterMovementState.Running && State != CharacterMovementState.Walking && State != CharacterMovementState.Sprinting)    // Change state to running
+                {
+                    State = CharacterMovementState.Running;
+                    Running?.Invoke();
+                }
+            }
+        }
+
         public override Vector3 GetForward()
         {
             var forward          = characterBody.position - playerCamera.Position;
@@ -208,6 +272,8 @@ namespace Game.Components.Movement
                 return (false, default);
             }
         }
+        
+        public CharacterMovementState State { get; private set; }
 
         private bool ShouldLeaveWallMovement()
         {

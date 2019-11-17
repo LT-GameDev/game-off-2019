@@ -729,13 +729,15 @@ MonoBehaviour:
     fallGravityFactor: 20
     acceleration: 25
     deceleration: 35
-    jumpPower: 7
-    maxSpeed: 5
+    jumpPower: 5
+    maxSpeed: 3.2
     airControl: 0.1
+    walkingFactor: 0.39
+    sprintingFactor: 1.7
     lookSpeed: 8
     upRotationSpeed: 12
   wallMovement:
-    minRequiredSpeed: 6
+    minRequiredSpeed: 4
     climbVelocity: 3
     fallAcceleration: 3
     rotationSpeed: 12
@@ -826,9 +828,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0.0003}
   m_Bound: 0
-  m_Radius: 0.0007
+  m_Radius: 0.0009
   m_Height: 0.002
 --- !u!114 &8940590070314242782
 MonoBehaviour:
@@ -1162,9 +1164,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0, y: 0, z: 0.0003}
   m_Bound: 0
-  m_Radius: 0.0007
+  m_Radius: 0.0009
   m_Height: 0.002
 --- !u!114 &6384086084771584189
 MonoBehaviour:
@@ -4765,26 +4767,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: MC
       objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: b6c0e7da4eb6f994e814c98df38365d2,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 08acab98cf6cfef4888588d0dd305f55, type: 2}
-    - target: {fileID: -6057140222963153312, guid: b6c0e7da4eb6f994e814c98df38365d2,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: -4289370664742004518, guid: b6c0e7da4eb6f994e814c98df38365d2,
-        type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0.07238516
-      objectReference: {fileID: 0}
-    - target: {fileID: -4289370664742004518, guid: b6c0e7da4eb6f994e814c98df38365d2,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.027591424
-      objectReference: {fileID: 0}
     - target: {fileID: -4216859302048453862, guid: b6c0e7da4eb6f994e814c98df38365d2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -4840,6 +4822,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: b6c0e7da4eb6f994e814c98df38365d2,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 08acab98cf6cfef4888588d0dd305f55, type: 2}
+    - target: {fileID: -6057140222963153312, guid: b6c0e7da4eb6f994e814c98df38365d2,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 33805542956157712, guid: b6c0e7da4eb6f994e814c98df38365d2,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -4849,6 +4841,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.12582125
+      objectReference: {fileID: 0}
+    - target: {fileID: -4289370664742004518, guid: b6c0e7da4eb6f994e814c98df38365d2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.07238516
+      objectReference: {fileID: 0}
+    - target: {fileID: -4289370664742004518, guid: b6c0e7da4eb6f994e814c98df38365d2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.027591424
       objectReference: {fileID: 0}
     - target: {fileID: 47351823273337735, guid: b6c0e7da4eb6f994e814c98df38365d2,
         type: 3}

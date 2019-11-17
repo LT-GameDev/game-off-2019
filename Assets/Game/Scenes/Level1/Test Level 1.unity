@@ -365,21 +365,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 6460768251821575282, guid: 6bfaf99a9ded27142ad588115bfb3381,
-        type: 3}
-      propertyPath: m_Orbits.Array.data[0].m_Radius
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 6460768251821575282, guid: 6bfaf99a9ded27142ad588115bfb3381,
-        type: 3}
-      propertyPath: m_Orbits.Array.data[1].m_Radius
-      value: 3.6
-      objectReference: {fileID: 0}
-    - target: {fileID: 6460768251821575282, guid: 6bfaf99a9ded27142ad588115bfb3381,
-        type: 3}
-      propertyPath: m_Orbits.Array.data[2].m_Radius
-      value: 2
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6bfaf99a9ded27142ad588115bfb3381, type: 3}
 --- !u!1001 &1550742327294156215
