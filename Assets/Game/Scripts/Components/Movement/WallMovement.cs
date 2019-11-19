@@ -41,6 +41,16 @@ namespace Game.Components.Movement
         {
             if (movementContext.falling)
             {
+                if (movementContext.jumpOff)
+                {
+                    var groundPlaneVelocity = Vector3.Scale(new Vector3(1, 0, 1), movementContext.body.velocity);
+                    var jumpOffUpRotation   = Quaternion.LookRotation(groundPlaneVelocity.normalized, Vector3.up);
+            
+                    movementContext.meshRoot.rotation = Quaternion.Lerp(movementContext.meshRoot.rotation, jumpOffUpRotation, rotationSpeed * deltaTime);
+                
+                    return;
+                }
+                
                 return;
             }
 
@@ -84,16 +94,6 @@ namespace Game.Components.Movement
             {
                 movementContext.falling = true;
                 movementContext.body.useGravity = true;
-                return;
-            }
-
-            if (movementContext.jumpOff)
-            {
-                var groundPlacneVelocity = Vector3.Scale(new Vector3(1, 0, 1), movementContext.body.velocity);
-                var jumpOffUpRotation    = Quaternion.LookRotation(groundPlacneVelocity.normalized, Vector3.up);
-            
-                movementContext.meshRoot.rotation = Quaternion.Lerp(movementContext.meshRoot.rotation, jumpOffUpRotation, rotationSpeed * deltaTime);
-                
                 return;
             }
             
