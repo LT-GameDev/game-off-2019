@@ -47,6 +47,7 @@ namespace Game.Components.Movement
             if (!movementContext.sprint)
             {
                 movementContext.falling = true;
+                movementContext.body.useGravity = true;
                 return;
             }
             
@@ -55,6 +56,7 @@ namespace Game.Components.Movement
             if (!result.success)
             {
                 movementContext.falling = true;
+                movementContext.body.useGravity = true;
                 return;
             }
 
@@ -67,6 +69,7 @@ namespace Game.Components.Movement
                 movementContext.body.useGravity = true;
 
                 movementContext.jumpOff = true;
+                movementContext.falling = true;
                 return;
             }
 
@@ -80,6 +83,7 @@ namespace Game.Components.Movement
             if (Vector3.Scale(GameWorld.GetGroundPlane(), existingVelocity).magnitude < minRequiredSpeed)
             {
                 movementContext.falling = true;
+                movementContext.body.useGravity = true;
                 return;
             }
 
