@@ -1,5 +1,7 @@
 ﻿#pragma warning disable 649
 
+using System;
+using System.Collections;
 using Game.Components.Movement;
 using Game.Components.Abilities;
 using Game.Components.Animations;
@@ -18,12 +20,16 @@ namespace Game.Components
         [Header("Abilities")]
         [SerializeField] private Dash dash;
 
+        private GameManager gameManager;
         private PlayerInput input;
         private Vector2 playerInput;
         private bool inputBlocked;
+        private float fallTime;
 
         private void Awake()
         {
+            gameManager = FindObjectOfType<GameManager>();
+            
             input = new PlayerInput();
 
             input.Player.Move.performed += ctx => playerInput = ctx.ReadValue<Vector2>();
@@ -47,6 +53,23 @@ namespace Game.Components
             
             animationController.BecomeBusy   += OnBecomeBusy;
             animationController.NoLongerBusy += OnBecomeFree;
+        }
+
+        private void FixedUpdate()
+        {
+            if (!movementController.IsFalling)
+            {
+                fallTime = 0;
+            }
+            else
+            {
+                fallTime += Time.fixedDeltaTime;
+
+                if (fallTime >= 1)
+                {
+                    FallToDeath();
+                }
+            }
         }
 
         private void Update()
@@ -118,6 +141,24 @@ namespace Game.Components
         private void OnBecomeFree()
         {
             inputBlocked = false;
+        }
+
+        private void FallToDeath()
+        {
+            enabled = false;
+            
+            // Play falling to death sound effect?
+            // Switch to falling camera?
+            // Additional logic?
+
+            StartCoroutine(ContinueFromLastSave());
+            
+            
+            IEnumerator ContinueFromLastSave()
+            {
+                yield return new WaitForSeconds(2f);
+                gameManager.ContinueGame();
+            }
         }
     }
 }

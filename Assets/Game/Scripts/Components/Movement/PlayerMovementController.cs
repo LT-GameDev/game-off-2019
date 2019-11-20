@@ -147,7 +147,7 @@ namespace Game.Components.Movement
 
         private void GlobalGroundCheck()
         {
-            var position   = characterBody.position + characterBody.rotation * characterCollider.center;
+            var position   = characterBody.position + characterBody.rotation * characterCollider.center + Vector3.up * 0.01f;
             var halfHeight = characterCollider.height / 2;
             
             groundChecker.Check(position, halfHeight * 0.9f, characterCollider.radius * 0.5f);
@@ -282,5 +282,8 @@ namespace Game.Components.Movement
 
         public bool Grounded => (currentMovementMode == MovementMode.Humanoid && context.grounded) || 
                                 (currentMovementMode == MovementMode.WallMovement && !context.falling && !context.jumpOff);
+
+        public bool IsFalling => characterBody.velocity.y < -0.1f && !groundChecker.Grounded &&
+                                 groundChecker.Distance >= groundChecker.MaxDistance;
     }
 }

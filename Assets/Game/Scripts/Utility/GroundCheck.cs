@@ -31,13 +31,17 @@ namespace Game.Utility
                 return;
             }
 
+            Distance = maxDistance;
             Grounded = false;
         }
+        
+        public float MaxDistance => maxDistance;
 
         public bool Grounded { get; private set; }
 
         public float Distance { get; private set; }
 
         public Vector3 Normal { get; private set; }
+
     }
 }
