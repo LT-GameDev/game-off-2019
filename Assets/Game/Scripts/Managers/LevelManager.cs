@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 649
 
 using System;
+using System.Collections;
 using Game.Components;
 using Game.Models;
 using UniRx;
@@ -40,6 +41,14 @@ namespace Game.Managers
                 PlacePlayer(playerStartPosition.position, playerStartPosition.rotation);
                 
                 initializationComplete?.Invoke();
+
+                StartCoroutine(SaveLevelStartCheckpoint());
+            }
+
+            IEnumerator SaveLevelStartCheckpoint()
+            {
+                yield return null;
+                FindObjectOfType<GameManager>().SaveGame();
             }
         }
 
