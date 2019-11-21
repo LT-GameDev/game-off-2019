@@ -35,7 +35,7 @@ namespace Game.Components
         {
             var interactableInstance = collider.GetComponent<IInteractable>();
 
-            if (interactableInstance == interactable)
+            if (interactableInstance == interactable && interactableInstance != null && !interactableInstance.Equals(null))
             {
                 interactable = null;
                 
