@@ -6,6 +6,7 @@ using Game.Components.Movement;
 using Game.Components.Abilities;
 using Game.Components.Animations;
 using Game.Enums;
+using Game.Managers;
 using UnityEngine;
 
 namespace Game.Components
@@ -20,6 +21,8 @@ namespace Game.Components
         [Header("Abilities")]
         [SerializeField] private Dash dash;
 
+        private Coroutine staminaRecoveryRoutine;
+        private PlayerResourceManager resourceManager;
         private GameManager gameManager;
         private PlayerInput input;
         private Vector2 playerInput;
@@ -28,7 +31,8 @@ namespace Game.Components
 
         private void Awake()
         {
-            gameManager = FindObjectOfType<GameManager>();
+            gameManager     = FindObjectOfType<GameManager>();
+            resourceManager = gameManager.GetService<PlayerResourceManager>();
             
             input = new PlayerInput();
 
@@ -53,6 +57,8 @@ namespace Game.Components
             
             animationController.BecomeBusy   += OnBecomeBusy;
             animationController.NoLongerBusy += OnBecomeFree;
+            
+            resourceManager.StaminaConsumed += OnStaminaConsumed;
         }
 
         private void FixedUpdate()
@@ -85,6 +91,8 @@ namespace Game.Components
             
             animationController.NoLongerBusy -= OnBecomeFree;
             animationController.BecomeBusy   -= OnBecomeBusy;
+
+            resourceManager.StaminaConsumed -= OnStaminaConsumed;
         }
 
         private void ToggleWalking()
@@ -158,6 +166,28 @@ namespace Game.Components
             {
                 yield return new WaitForSeconds(2f);
                 gameManager.ContinueGame();
+            }
+        }
+
+        private void OnStaminaConsumed()
+        {
+            if (staminaRecoveryRoutine != null)
+                StopCoroutine(staminaRecoveryRoutine);
+
+            staminaRecoveryRoutine = StartCoroutine(StaminaRecoveryRoutine());
+
+
+            IEnumerator StaminaRecoveryRoutine()
+            {
+                yield return new WaitForSeconds(1f);
+
+                while (true)
+                {
+                    if (!resourceManager.RecoverStamina(Time.fixedDeltaTime))
+                        yield break;
+                        
+                    yield return new WaitForFixedUpdate();
+                }
             }
         }
     }

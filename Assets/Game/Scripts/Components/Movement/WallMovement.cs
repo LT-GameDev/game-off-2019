@@ -2,6 +2,7 @@
 
 using System;
 using Game.Components.Movement.Interface;
+using Game.Managers;
 using Game.Models.Movement;
 using Game.Utility;
 using UnityEngine;
@@ -11,6 +12,7 @@ namespace Game.Components.Movement
     [Serializable]
     public class WallMovement : IMovementLogic<PlayerMovementContext>
     {
+        [SerializeField] private float staminaCostPerSecond;
         [SerializeField] private float minRequiredSpeed;
         [SerializeField] private float climbVelocity;
         [SerializeField] private float fallAcceleration;
@@ -18,12 +20,20 @@ namespace Game.Components.Movement
         [SerializeField] private float jumpPower;
         
         private PlayerMovementContext movementContext;
+        private PlayerResourceManager resourceManager;
         private Vector3 previousNormal;
         private float upwardsVector;
         
         public void Initialize(PlayerMovementContext context)
         {
             movementContext = context;
+
+            var gameManager = GameObject.FindObjectOfType<GameManager>();
+
+            if (gameManager)
+            {
+                resourceManager = gameManager.GetService<PlayerResourceManager>();
+            } 
         }
 
         public void WarmUp()
@@ -91,6 +101,13 @@ namespace Game.Components.Movement
             var existingVelocity = movementContext.body.velocity;
             
             if (Vector3.Scale(GameWorld.GetGroundPlane(), existingVelocity).magnitude < minRequiredSpeed)
+            {
+                movementContext.falling = true;
+                movementContext.body.useGravity = true;
+                return;
+            }
+
+            if (!resourceManager.ConsumeStamina(staminaCostPerSecond * deltaTime))
             {
                 movementContext.falling = true;
                 movementContext.body.useGravity = true;

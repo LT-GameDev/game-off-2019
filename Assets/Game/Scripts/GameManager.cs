@@ -42,12 +42,14 @@ namespace Game
             serviceContainer.AddService(new GameSceneManager());
             serviceContainer.AddService(new PersistenceManager());
             serviceContainer.AddService(new InventoryManager());
+            serviceContainer.AddService(new PlayerResourceManager());
         }
 
         public void StartGame()
         {
             loadingView.SetActive(true);
-            
+
+            GetService<PlayerResourceManager>().PrepareResources();
             GetService<InventoryManager>().InitializeInventory();
             StartCoroutine(LoadLevelDelayed());
 
@@ -73,6 +75,7 @@ namespace Game
 
             void OnPersistentData(SaveData saveData)
             {
+                GetService<PlayerResourceManager>().PrepareResources();
                 GetService<GameSceneManager>().LoadLevel(saveData.levelId, saveData.levelData, OnLoaded);
                 GetService<InventoryManager>().InitializeInventory(saveData.items.Select(id => items.GetById(id)).ToList());
             }

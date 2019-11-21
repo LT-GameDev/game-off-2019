@@ -726,7 +726,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   defaultMovement:
-    fallGravityFactor: 20
+    fallGravityFactor: 35
     acceleration: 25
     deceleration: 35
     jumpPower: 5
@@ -737,6 +737,7 @@ MonoBehaviour:
     lookSpeed: 8
     upRotationSpeed: 12
   wallMovement:
+    staminaCostPerSecond: 35
     minRequiredSpeed: 4
     climbVelocity: 3
     fallAcceleration: 3
