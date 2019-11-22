@@ -43,6 +43,7 @@ namespace Game
             serviceContainer.AddService(new PersistenceManager());
             serviceContainer.AddService(new InventoryManager());
             serviceContainer.AddService(new PlayerResourceManager());
+            serviceContainer.AddService(new CheckpointManager(this));
         }
 
         public void StartGame()
@@ -78,6 +79,7 @@ namespace Game
                 GetService<PlayerResourceManager>().PrepareResources();
                 GetService<GameSceneManager>().LoadLevel(saveData.levelId, saveData.levelData, OnLoaded);
                 GetService<InventoryManager>().InitializeInventory(saveData.items.Select(id => items.GetById(id)).ToList());
+                GetService<CheckpointManager>().Initialize(saveData.checkpointData);
             }
 
             void OnLoaded()
@@ -96,8 +98,9 @@ namespace Game
         {
             // TODO: display save game indicator
             
-            var levelData = FindObjectOfType<LevelManager>().GetLevelData();
-            var itemsData = GetService<InventoryManager>().GetItems();
+            var levelData   = FindObjectOfType<LevelManager>().GetLevelData();
+            var itemsData   = GetService<InventoryManager>().GetItems();
+            var checkpoints = GetService<CheckpointManager>().GetCheckpoints();
 
             var saveData = new SaveData();
                 

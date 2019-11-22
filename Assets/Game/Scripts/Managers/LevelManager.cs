@@ -97,7 +97,11 @@ namespace Game.Managers
 
             void InternalLoadComplete(AsyncOperation op)
             {
-                levelData.zones.Add(zoneId);
+                if (!levelData.zones.Contains(zoneId))
+                {
+                    levelData.zones.Add(zoneId);
+                }
+                
                 onComplete?.Invoke();
             }
         }
