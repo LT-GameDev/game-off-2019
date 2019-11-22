@@ -18,6 +18,9 @@ namespace Game.Managers
     
     public class PersistenceManager : IPersistenceManager<SaveData>, IDisposable
     {
+        public event Action SaveBegin;
+        public event Action SaveCompleted;
+        
         private string SaveDirectory => Application.persistentDataPath + "/Saves/";
         private string SaveFileName => SaveDirectory + "savegame.cgs";
 
@@ -59,6 +62,8 @@ namespace Game.Managers
             
             async void SaveAsync()
             {
+                SaveBegin?.Invoke();
+                
                 try
                 {
                     if (!HasSave())
@@ -82,6 +87,8 @@ namespace Game.Managers
                 {
                     // LOG?
                 }
+                
+                SaveCompleted?.Invoke();
             }
         }
 
