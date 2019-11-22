@@ -84,13 +84,20 @@ namespace Game
 
             void OnLoaded()
             {
-                loadingView.SetActive(false);
+                StartCoroutine(HackContinueCameraBug());
             }
 
             IEnumerator LoadLevelDelayed()
             {
                 yield return new WaitForSeconds(0.3f);
                 GetService<PersistenceManager>().Load(OnPersistentData, StartGame);
+            }
+
+            IEnumerator HackContinueCameraBug()
+            {
+                yield return new WaitForSeconds(1.5f);
+                
+                loadingView.SetActive(false);
             }
         }
 
