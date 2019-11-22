@@ -15,7 +15,10 @@ namespace Game.Components
 
         public Checkpoint()
         {
-            id = System.Guid.NewGuid().ToString();
+            if (string.IsNullOrWhiteSpace(id))
+            {
+                id = System.Guid.NewGuid().ToString();
+            }
         }
         
         private void Awake()

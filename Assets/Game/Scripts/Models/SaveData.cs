@@ -9,7 +9,7 @@ namespace Game.Models
     {
         public int levelId;
         public LevelData levelData;
-        public CheckpointData checkpointData;
+        public CheckpointData checkpoints;
         public List<int> items;
     }
 }

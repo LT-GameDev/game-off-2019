@@ -130,8 +130,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 20366448}
-  - component: {fileID: 20366447}
   - component: {fileID: 20366449}
+  - component: {fileID: 20366447}
   m_Layer: 0
   m_Name: Checkpoint 2
   m_TagString: Untagged
@@ -152,6 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
+  id: 046fa175-5eb1-491c-87b7-e4516e98b563
 --- !u!4 &20366448
 Transform:
   m_ObjectHideFlags: 0
@@ -280,8 +281,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 89291886}
-  - component: {fileID: 89291887}
   - component: {fileID: 89291888}
+  - component: {fileID: 89291887}
   m_Layer: 0
   m_Name: Checkpoint 1
   m_TagString: Untagged
@@ -316,6 +317,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerTag: Player
+  id: 62f107c5-9bab-48f9-b75e-58deb09b96d2
 --- !u!65 &89291888
 BoxCollider:
   m_ObjectHideFlags: 0

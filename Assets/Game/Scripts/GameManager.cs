@@ -79,7 +79,7 @@ namespace Game
                 GetService<PlayerResourceManager>().PrepareResources();
                 GetService<GameSceneManager>().LoadLevel(saveData.levelId, saveData.levelData, OnLoaded);
                 GetService<InventoryManager>().InitializeInventory(saveData.items.Select(id => items.GetById(id)).ToList());
-                GetService<CheckpointManager>().Initialize(saveData.checkpointData);
+                GetService<CheckpointManager>().Initialize(saveData.checkpoints);
             }
 
             void OnLoaded()
@@ -111,9 +111,10 @@ namespace Game
 
             var saveData = new SaveData();
                 
-            saveData.levelId   = levelData.levelId;
-            saveData.levelData = levelData.levelData;
-            saveData.items     = itemsData.Select(item => item.ItemId).ToList();
+            saveData.levelId     = levelData.levelId;
+            saveData.levelData   = levelData.levelData;
+            saveData.checkpoints = checkpoints;
+            saveData.items       = itemsData.Select(item => item.ItemId).ToList();
 
             GetService<PersistenceManager>().Save(saveData);
         }
