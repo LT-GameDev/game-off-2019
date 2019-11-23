@@ -35,7 +35,7 @@ namespace Game.UI
         {
             operationCount++;
 
-            if (DOTween.IsTweening(_maskTween) || DOTween.IsTweening(_iconTween))
+            if ((_maskTween != null && DOTween.IsTweening(_maskTween)) || DOTween.IsTweening(_iconTween))
                 return;
 
             icon.color = icon.color.Alpha(0);
