@@ -7,13 +7,21 @@ namespace Game.Components.Activatables
 {
     public class DoorOpener : Activatable, IInteractable
     {
-        Vector3 defaultDoorPosition;
-        public float smooth = 2f;
-        public float doorOpenDistance = 2f;
-        public float doorOpenAngle = 90f;
-        public float doorCloseAngle = 0f;
-        public bool isOpen = false;
+        [SerializeField] private Transform targetTransform; // The transform to move       
+        [SerializeField] private Transform opened;          // A transform set from editor that defines the position and orientation of the object when opened
+        [SerializeField] private Transform closed;         // A transform set from editor that defines the position and orientation of the object when closed
+        [SerializeField] private float moveSpeed;           // Movement speed of the object when opening/closing
+        [SerializeField] private float rotateSpeed;         // Rotation speed of the object when opening/closing
 
+        public bool isOpen;
+
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.Space))
+            {
+                Activate(!isOpen);
+            }
+        }
         public int GetInteractionType()
         {
             throw new System.NotImplementedException();
@@ -32,51 +40,52 @@ namespace Game.Components.Activatables
             Activate(isOpen = !isOpen);
         }
 
-        public override void Activate(bool state)
+        public override void Activate(bool open)
         {
-            isOpen = state;
-        }
+            if (isOpen == open)
+                return;
 
-        private void OpenStandardDoor()
-        {
+            isOpen = open;
+
             if (isOpen)
             {
-                Quaternion targetRotation = Quaternion.Euler(0, doorOpenAngle, 0); // // Calculate how much is rotation to ending position
-                transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation, smooth * Time.deltaTime);
+                StopAllCoroutines();    // Cancel currently active action if there is one
+                StartCoroutine(UpdateObjectState(opened));    // Start opening action
             }
             else
             {
-                Quaternion targetRotation2 = Quaternion.Euler(0, doorCloseAngle, 0); // Calculate how much is rotation to starting position
-                transform.localRotation = Quaternion.Slerp(transform.localRotation, targetRotation2, smooth * Time.deltaTime);
+                StopAllCoroutines();    // Cancel currently active action if there is one
+                StartCoroutine(UpdateObjectState(closed));    // Start closing action
             }
         }
 
-        private void OpenSlidingDoor()
+        private IEnumerator UpdateObjectState(Transform target)
         {
-            if (isOpen)
+            var distanceThreshold = Time.deltaTime * moveSpeed * 1.2f;
+            var angleThreshold = Time.deltaTime * rotateSpeed * 1.2f;
+
+            while (true)
             {
-                float targetEndingPositionZ = Mathf.Lerp(transform.localPosition.z, defaultDoorPosition.z + doorOpenDistance, Time.deltaTime * smooth); // Calculate how much should door move
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, targetEndingPositionZ);
-            }
-            else
-            {
-                float targetStartingPositionZ = Mathf.Lerp(transform.localPosition.z, defaultDoorPosition.z, Time.deltaTime * smooth); // Calculate how much should door move back
-                transform.localPosition = new Vector3(transform.localPosition.x, transform.localPosition.y, targetStartingPositionZ);
-            }
-        }
-        void Start()
-        {
-            defaultDoorPosition = transform.localPosition;
-        }
-        void Update()
-        {
-            if (gameObject.tag == "SlidingDoor") // Opens GameObjects with tag Sliding Door
-            {
-                OpenSlidingDoor();
-            }
-            else // Opens GameObjects with other tags (Basic Door)
-            {
-                OpenStandardDoor();
+                var distance = Vector3.Distance(targetTransform.position, target.position);
+                var angle = Quaternion.Angle(targetTransform.rotation, target.rotation);
+
+                var distanceThresholdReached = distance < distanceThreshold;
+                var angleThresholdReached = angle < angleThreshold;
+
+                // Check if thresholds are reached
+                if (distanceThresholdReached && angleThresholdReached)
+                {
+                    targetTransform.position = target.position;    // Set to target position
+                    targetTransform.rotation = target.rotation;    // Set to target rotation
+
+                    yield break;    // Halt the coroutine
+                }
+
+                // Rotate and translate with interpolation
+                targetTransform.position = Vector3.Slerp(targetTransform.position, target.position, Time.deltaTime * moveSpeed);
+                targetTransform.rotation = Quaternion.Slerp(targetTransform.rotation, target.rotation, Time.deltaTime * rotateSpeed);
+
+                yield return new WaitForEndOfFrame();
             }
         }
     }
