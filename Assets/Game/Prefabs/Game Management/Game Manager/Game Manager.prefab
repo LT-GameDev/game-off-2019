@@ -49,3 +49,4 @@ MonoBehaviour:
     items:
     - {fileID: 11400000, guid: f32b34626cf204b45bad40da66f3af7a, type: 2}
   loadingView: {fileID: 0}
+  interactionHintView: {fileID: 0}

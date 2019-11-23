@@ -7,6 +7,7 @@ using Game.Containers;
 using Game.Managers;
 using Game.Models;
 using Game.Models.Inventory;
+using Game.UI;
 using UnityEngine;
 
 namespace Game
@@ -23,6 +24,7 @@ namespace Game
 
         [Header("General Purpose UI")] 
         [SerializeField] private GameObject loadingView;
+        [SerializeField] private InteractionHintView interactionHintView;
         
         private ServiceContainer serviceContainer;
 
@@ -44,6 +46,8 @@ namespace Game
             serviceContainer.AddService(new InventoryManager());
             serviceContainer.AddService(new PlayerResourceManager());
             serviceContainer.AddService(new CheckpointManager(this));
+            
+            serviceContainer.AddService(interactionHintView);
         }
 
         public void StartGame()
@@ -52,6 +56,7 @@ namespace Game
 
             GetService<PlayerResourceManager>().PrepareResources();
             GetService<InventoryManager>().InitializeInventory();
+            GetService<CheckpointManager>().Initialize(new CheckpointData());
             StartCoroutine(LoadLevelDelayed());
 
             

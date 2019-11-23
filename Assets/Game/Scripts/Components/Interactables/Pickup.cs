@@ -9,14 +9,16 @@ using UnityEngine;
 
 namespace Game.Components.Interactables
 {
-    public class Pickup : MonoBehaviour, IInteractable
+    public class Pickup : BaseInteractable
     {
         [SerializeField] private ItemModel item;
         
         private InventoryManager inventoryManager;
         
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
+            
             var gameManager = FindObjectOfType<GameManager>();
 
             inventoryManager = gameManager.GetService<InventoryManager>();
@@ -27,26 +29,21 @@ namespace Game.Components.Interactables
             }
         }
 
-        public int GetInteractionType()
+        public override int GetInteractionType()
         {
             return (int) PlayerInteractions.Pickup;
         }
 
-        public void Notify(bool notifiedState)
-        {
-            if (notifiedState)
-            {
-                this.Log().Debug($"Press 'F' to pickup");
-            }
-        }
-
-        public void Interact()
+        public override void Interact()
         {
             inventoryManager.AddItem(item);
             
             gameObject.SetActive(false);
             
             FindObjectOfType<GameManager>().SaveGame();
+            Notify(false);
         }
+
+        protected override string NotificationText => $"take {item.ItemName}";
     }
 }
