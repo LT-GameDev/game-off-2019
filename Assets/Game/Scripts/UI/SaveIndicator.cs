@@ -9,12 +9,10 @@ namespace Game.UI
 {
     public class SaveIndicator : MonoBehaviour
     {
-        [SerializeField] private Image mask;
-        [SerializeField] private Image icon;
+        [SerializeField] private Image filledImage;
         
         private PersistenceManager persistenceManager;
-        private Tweener _maskTween;
-        private Tweener _iconTween;
+        private Tweener _tweener;
         private int operationCount;
         
         private void Start()
@@ -23,6 +21,8 @@ namespace Game.UI
             
             persistenceManager.SaveBegin     += OnSaveBegin;
             persistenceManager.SaveCompleted += OnSaveCompleted;
+            
+            gameObject.SetActive(false);
         }
 
         private void OnDestroy()
@@ -35,43 +35,34 @@ namespace Game.UI
         {
             operationCount++;
 
-            if (DOTween.IsTweening(_maskTween) || DOTween.IsTweening(_iconTween))
+            if (_tweener != null && DOTween.IsTweening(_tweener))
                 return;
+            
+            gameObject.SetActive(true);
 
-            icon.color = icon.color.Alpha(0);
-            _iconTween = icon.DOFade(1, 1f).SetLoops(-1, LoopType.Yoyo);
+            filledImage.fillClockwise = true;
+            
+            _tweener = DOTween.To(() => filledImage.fillAmount, val => filledImage.fillAmount = val, 0f, 0.5f)
+                .SetLoops(-1, LoopType.Yoyo)
+                .OnStepComplete(OnLoopStepComplete);
 
-            mask.color = mask.color.Alpha(0);
-            _maskTween = mask.DOFade(0.5f, 1f).SetLoops(-1, LoopType.Yoyo);
+
+            void OnLoopStepComplete()
+            {
+                filledImage.fillClockwise = !filledImage.fillClockwise;
+                
+                if (operationCount <= 0)
+                {
+                    _tweener.Kill();
+                    
+                    gameObject.SetActive(false);
+                }
+            }
         }
 
         private void OnSaveCompleted()
         {
             operationCount--;
-
-            _maskTween.OnStepComplete(OnMaskStepComplete);
-            _iconTween.OnStepComplete(OnIconStepComplete);
-
-
-            void OnMaskStepComplete()
-            {
-                if (mask.color.a < 0.1f)
-                {
-                    _maskTween.Kill();
-                    
-                    mask.color = mask.color.Alpha(0);
-                }
-            }
-
-            void OnIconStepComplete()
-            {
-                if (icon.color.a < 0.1f)
-                {
-                    _iconTween.Kill();
-                    
-                    icon.color = icon.color.Alpha(0);
-                }
-            }
         }
     }
 }
