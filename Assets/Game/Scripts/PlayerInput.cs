@@ -180,6 +180,33 @@ namespace Game
                     ""isPartOfComposite"": false
                 }
             ]
+        },
+        {
+            ""name"": ""PauseMenu"",
+            ""id"": ""a91db300-4bea-47dc-82b9-489a101381bd"",
+            ""actions"": [
+                {
+                    ""name"": ""TogglePause"",
+                    ""type"": ""Button"",
+                    ""id"": ""0e5d7a12-c807-4367-8cba-994da16a6fd6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""49d89050-ed76-44bd-9af3-2444b5c62cb4"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""TogglePause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -209,6 +236,9 @@ namespace Game
             m_Player_Jump = m_Player.FindAction("Jump", throwIfNotFound: true);
             m_Player_Dash = m_Player.FindAction("Dash", throwIfNotFound: true);
             m_Player_Interact = m_Player.FindAction("Interact", throwIfNotFound: true);
+            // PauseMenu
+            m_PauseMenu = asset.FindActionMap("PauseMenu", throwIfNotFound: true);
+            m_PauseMenu_TogglePause = m_PauseMenu.FindAction("TogglePause", throwIfNotFound: true);
         }
 
         ~PlayerInput()
@@ -327,6 +357,39 @@ namespace Game
             }
         }
         public PlayerActions @Player => new PlayerActions(this);
+
+        // PauseMenu
+        private readonly InputActionMap m_PauseMenu;
+        private IPauseMenuActions m_PauseMenuActionsCallbackInterface;
+        private readonly InputAction m_PauseMenu_TogglePause;
+        public struct PauseMenuActions
+        {
+            private PlayerInput m_Wrapper;
+            public PauseMenuActions(PlayerInput wrapper) { m_Wrapper = wrapper; }
+            public InputAction @TogglePause => m_Wrapper.m_PauseMenu_TogglePause;
+            public InputActionMap Get() { return m_Wrapper.m_PauseMenu; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(PauseMenuActions set) { return set.Get(); }
+            public void SetCallbacks(IPauseMenuActions instance)
+            {
+                if (m_Wrapper.m_PauseMenuActionsCallbackInterface != null)
+                {
+                    TogglePause.started -= m_Wrapper.m_PauseMenuActionsCallbackInterface.OnTogglePause;
+                    TogglePause.performed -= m_Wrapper.m_PauseMenuActionsCallbackInterface.OnTogglePause;
+                    TogglePause.canceled -= m_Wrapper.m_PauseMenuActionsCallbackInterface.OnTogglePause;
+                }
+                m_Wrapper.m_PauseMenuActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    TogglePause.started += instance.OnTogglePause;
+                    TogglePause.performed += instance.OnTogglePause;
+                    TogglePause.canceled += instance.OnTogglePause;
+                }
+            }
+        }
+        public PauseMenuActions @PauseMenu => new PauseMenuActions(this);
         private int m_KeyboardMouseSchemeIndex = -1;
         public InputControlScheme KeyboardMouseScheme
         {
@@ -344,6 +407,10 @@ namespace Game
             void OnJump(InputAction.CallbackContext context);
             void OnDash(InputAction.CallbackContext context);
             void OnInteract(InputAction.CallbackContext context);
+        }
+        public interface IPauseMenuActions
+        {
+            void OnTogglePause(InputAction.CallbackContext context);
         }
     }
 }
