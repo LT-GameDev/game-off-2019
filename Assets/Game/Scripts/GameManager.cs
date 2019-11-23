@@ -1,5 +1,6 @@
 ﻿#pragma warning disable 649
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,12 +8,17 @@ using Game.Containers;
 using Game.Managers;
 using Game.Models;
 using Game.Models.Inventory;
+using Game.UI;
 using UnityEngine;
 
 namespace Game
 {
+    public delegate void PausedStateDelegate(bool paused);
+    
     public class GameManager : MonoBehaviour, IServiceContainer
     {
+        public event PausedStateDelegate Paused; 
+        
         [SerializeField] private int mainMenu;
     
         [Header("Levels")]
@@ -23,6 +29,7 @@ namespace Game
 
         [Header("General Purpose UI")] 
         [SerializeField] private GameObject loadingView;
+        [SerializeField] private InteractionHintView interactionHintView;
         
         private ServiceContainer serviceContainer;
 
@@ -31,8 +38,17 @@ namespace Game
             Application.backgroundLoadingPriority = ThreadPriority.Low;
             
             ConfigureServices();
-            
-            GetService<GameSceneManager>().LoadSync(mainMenu);
+
+            GetService<GameSceneManager>().LoadSingle(mainMenu);
+
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible   = true;
+        }
+
+        private void OnDestroy()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible   = true;
         }
 
         private void ConfigureServices()
@@ -44,14 +60,43 @@ namespace Game
             serviceContainer.AddService(new InventoryManager());
             serviceContainer.AddService(new PlayerResourceManager());
             serviceContainer.AddService(new CheckpointManager(this));
+            
+            serviceContainer.AddService(interactionHintView);
+        }
+
+        public void MainMenu()
+        {
+            loadingView.SetActive(true);
+            
+            var sceneManager = GetService<GameSceneManager>();
+                
+            sceneManager.UnloadActiveLevel(OnLevelUnloaded);
+
+
+            void OnLevelUnloaded()
+            {
+                sceneManager.LoadSingle(mainMenu, OnMainMenuOpened);
+            }
+
+            void OnMainMenuOpened()
+            {
+                loadingView.SetActive(false);
+
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible   = true;
+            }
         }
 
         public void StartGame()
         {
             loadingView.SetActive(true);
 
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible   = false;
+
             GetService<PlayerResourceManager>().PrepareResources();
             GetService<InventoryManager>().InitializeInventory();
+            GetService<CheckpointManager>().Initialize(new CheckpointData());
             StartCoroutine(LoadLevelDelayed());
 
             
@@ -70,6 +115,9 @@ namespace Game
         public void ContinueGame()
         {
             loadingView.SetActive(true);
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible   = false;
 
             StartCoroutine(LoadLevelDelayed());
 
@@ -99,6 +147,22 @@ namespace Game
                 
                 loadingView.SetActive(false);
             }
+        }
+
+        public void PauseGame()
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible   = true;
+            
+            Paused?.Invoke(true);
+        }
+
+        public void ResumeGame()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible   = false;
+            
+            Paused?.Invoke(false);
         }
 
         public void SaveGame()

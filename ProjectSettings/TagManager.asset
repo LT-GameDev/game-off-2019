@@ -19,7 +19,7 @@ TagManager:
   - PostProcessing
   - Ground
   - Walls
-  - 
+  - PlayerWorldSpaceUI
   - 
   - 
   - 
@@ -43,4 +43,7 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: World Space UI
+    uniqueID: 2720624949
     locked: 0

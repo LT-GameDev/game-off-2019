@@ -10,9 +10,11 @@ namespace Game.Managers
     {
         private bool levelsInitialized;
 
-        public void LoadSync(int levelId)
+        public void LoadSingle(int levelId, Action onLoaded = null)
         {
-            SceneManager.LoadScene(levelId, LoadSceneMode.Additive);
+            var asyncOp = SceneManager.LoadSceneAsync(levelId, LoadSceneMode.Additive);
+            asyncOp.allowSceneActivation = true;
+            
             SceneManager.sceneLoaded += InlineSceneLoaded;
 
 
@@ -25,6 +27,8 @@ namespace Game.Managers
                 SceneManager.SetActiveScene(scene);
 
                 levelsInitialized = true;
+                
+                onLoaded?.Invoke();
             }
         }
         
@@ -84,7 +88,7 @@ namespace Game.Managers
             }
         }
 
-        private void UnloadActiveLevel(Action onComplete)
+        public void UnloadActiveLevel(Action onComplete)
         {
             if (!levelsInitialized)
             {

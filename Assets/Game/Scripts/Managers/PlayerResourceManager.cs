@@ -15,8 +15,8 @@ namespace Game.Managers
         public void PrepareResources()
         {
             this.staminaRecoveryRate = 30;
-            this.stamina             = maxStamina;
             this.maxStamina          = 100;
+            this.stamina             = maxStamina;
         }
 
         public bool ConsumeStamina(float amount)
@@ -47,6 +47,16 @@ namespace Game.Managers
                 StaminaRecovered?.Invoke();
 
             return staminaRecovered;
+        }
+
+        public float GetStamina()
+        {
+            return stamina;
+        }
+
+        public float GetMaxStamina()
+        {
+            return maxStamina;
         }
     }
 }

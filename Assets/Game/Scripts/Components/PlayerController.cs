@@ -34,6 +34,8 @@ namespace Game.Components
             gameManager     = FindObjectOfType<GameManager>();
             resourceManager = gameManager.GetService<PlayerResourceManager>();
             
+            gameManager.Paused += OnPaused;
+            
             input = new PlayerInput();
 
             input.Player.Move.performed += ctx => playerInput = ctx.ReadValue<Vector2>();
@@ -93,6 +95,11 @@ namespace Game.Components
             animationController.BecomeBusy   -= OnBecomeBusy;
 
             resourceManager.StaminaConsumed -= OnStaminaConsumed;
+        }
+
+        private void OnDestroy()
+        {
+            gameManager.Paused -= OnPaused;
         }
 
         private void ToggleWalking()
@@ -189,6 +196,11 @@ namespace Game.Components
                     yield return new WaitForFixedUpdate();
                 }
             }
+        }
+
+        private void OnPaused(bool paused)
+        {
+            enabled = !paused;
         }
     }
 }
