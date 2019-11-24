@@ -1,6 +1,7 @@
 ﻿#pragma warning disable 649
 
 using System;
+using System.Collections;
 using Game.Components.Movement.Interface;
 using Game.Models.Movement;
 using Game.Utility;
@@ -27,6 +28,8 @@ namespace Game.Components.Movement
         [SerializeField] private float upRotationSpeed;
         
         private DefaultMovementContext movementContext;
+        private bool jumping;
+        private float time;
         
         public void Initialize(DefaultMovementContext context)
         {
@@ -40,6 +43,7 @@ namespace Game.Components.Movement
 
         public void Run(float deltaTime)
         {
+            
             var groundPlane = GameWorld.GetGroundPlane();
             var gravityAxis = GameWorld.GetGravityAxis();
             
@@ -58,6 +62,22 @@ namespace Game.Components.Movement
             if (movementContext.jump && movementContext.grounded)
             {
                 body.AddForce(gravityAxis * jumpPower, ForceMode.VelocityChange);
+                
+                if (!jumping)
+                {
+                    jumping = true;
+                    time = 0;
+                }
+                else
+                {
+                    if (time >= 0.12f)
+                    {
+                        jumping = false;
+                        time    = 0;
+                    }
+                    
+                    time += deltaTime;
+                }
             }
 
             var gravityAxisVelocityAngle    = Vector3.SignedAngle(gravityAxis, gravityComponent, Vector3.forward);
@@ -79,9 +99,9 @@ namespace Game.Components.Movement
             
             body.velocity = meshRoot.rotation * Vector3.forward * newSpeed + gravityComponent;
 
-            if (movementContext.grounded && !movementContext.jump && body.velocity.y <= 0)
+            if (movementContext.grounded && !jumping)
             {
-                var up = meshRoot.up;
+                var up = Vector3.up;
                 
                 var tangent = Vector3.Cross(up, movementContext.groundNormal).normalized;
                 var angle   = Vector3.SignedAngle(up, movementContext.groundNormal, tangent);
