@@ -127,16 +127,6 @@ namespace Game.Components.Movement
             context.walk = walking;
         }
 
-        private void DefaultMovementCallback()
-        {
-            defaultMovement.Run(Time.fixedDeltaTime);
-        }
-
-        private void WallMovementCallback()
-        {
-            wallMovement.Run(Time.fixedDeltaTime);
-        }
-
         private void ManageTransitions()
         {
             if (ShouldEnterWallMovement())
