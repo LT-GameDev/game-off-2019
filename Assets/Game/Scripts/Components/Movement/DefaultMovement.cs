@@ -20,6 +20,7 @@ namespace Game.Components.Movement
         [SerializeField] private float airControl;
         [SerializeField] private float walkingFactor;
         [SerializeField] private float sprintingFactor;
+        [SerializeField] private float climbAngle;
         
         [Header("Damping")]
         [SerializeField] private float lookSpeed;
@@ -45,9 +46,9 @@ namespace Game.Components.Movement
             var direction  = movementContext.direction;
             var deltaSpeed = GetAcceleration(direction) * GetControlFactor() * deltaTime;
 
-            var body         = movementContext.body;
-            var meshRoot     = movementContext.meshRoot;
-            var rotation     = movementContext.body.rotation;
+            var body     = movementContext.body;
+            var meshRoot = movementContext.meshRoot;
+            var rotation = movementContext.body.rotation;
 
             var groundComponent  = Vector3.Scale(groundPlane, body.velocity);
             var gravityComponent = Vector3.Scale(gravityAxis, body.velocity);
@@ -77,6 +78,22 @@ namespace Game.Components.Movement
             meshRoot.rotation = Quaternion.Lerp(meshRotation, lookRotation, lookSpeed * GetControlFactor() * deltaTime);
             
             body.velocity = meshRoot.rotation * Vector3.forward * newSpeed + gravityComponent;
+
+            if (movementContext.grounded && !movementContext.jump && body.velocity.y <= 0)
+            {
+                var up = meshRoot.up;
+                
+                var tangent = Vector3.Cross(up, movementContext.groundNormal).normalized;
+                var angle   = Vector3.SignedAngle(up, movementContext.groundNormal, tangent);
+
+                if (Mathf.Abs(angle) <= climbAngle)
+                {
+                    var normalization    = Quaternion.Euler(angle * tangent);
+                    var surfaceDirection = normalization * meshRotation * Vector3.forward;
+
+                    body.velocity = surfaceDirection * newSpeed;
+                }
+            }
         }
 
         private float GetAcceleration(Vector3 input)

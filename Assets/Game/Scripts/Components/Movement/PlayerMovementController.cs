@@ -152,7 +152,8 @@ namespace Game.Components.Movement
             
             groundChecker.Check(position, halfHeight * 0.9f, characterCollider.radius * 0.5f);
 
-            context.grounded = groundChecker.Grounded;
+            context.groundNormal = groundChecker.Normal;
+            context.grounded     = groundChecker.Grounded;
         }
 
         private void SwitchMode(MovementMode mode)

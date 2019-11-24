@@ -9,6 +9,7 @@ namespace Game.Models.Movement
         public bool walk;
         public bool grounded;
         public Vector3 direction;
+        public Vector3 groundNormal;
         public Transform meshRoot;
         public Rigidbody body;
     }
