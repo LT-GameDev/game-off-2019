@@ -39,7 +39,7 @@ namespace Game.Components
             {
                 interactable = null;
                 
-                interactableInstance.Notify(false);
+                interactableInstance?.Notify(false);
             }
         }
     }

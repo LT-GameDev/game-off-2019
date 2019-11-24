@@ -87,7 +87,7 @@ namespace Game.Managers
             return (thisLevelId, levelData);
         }
 
-        private void LoadZone(int zoneId, Action onComplete = null)
+        public void LoadZone(int zoneId, Action onComplete = null)
         {
             var asyncLoadOp = SceneManager.LoadSceneAsync(zoneId, LoadSceneMode.Additive);
 
@@ -106,7 +106,7 @@ namespace Game.Managers
             }
         }
 
-        private void UnloadZone(int zoneId)
+        public void UnloadZone(int zoneId)
         {
             var asyncUnloadOp = SceneManager.UnloadSceneAsync(zoneId, UnloadSceneOptions.UnloadAllEmbeddedSceneObjects);
 

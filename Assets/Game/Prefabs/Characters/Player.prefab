@@ -823,6 +823,7 @@ MonoBehaviour:
     airControl: 0.1
     walkingFactor: 0.39
     sprintingFactor: 1.7
+    climbAngle: 30
     lookSpeed: 8
     upRotationSpeed: 12
   wallMovement:
@@ -5173,21 +5174,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3155387839438168464}
     m_Modifications:
-    - target: {fileID: -927199367670048503, guid: b6c0e7da4eb6f994e814c98df38365d2,
-        type: 3}
-      propertyPath: m_Name
-      value: MC
-      objectReference: {fileID: 0}
-    - target: {fileID: -6057140222963153312, guid: b6c0e7da4eb6f994e814c98df38365d2,
-        type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 08acab98cf6cfef4888588d0dd305f55, type: 2}
-    - target: {fileID: -6057140222963153312, guid: b6c0e7da4eb6f994e814c98df38365d2,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: -4289370664742004518, guid: b6c0e7da4eb6f994e814c98df38365d2,
         type: 3}
       propertyPath: m_LocalRotation.x
@@ -5253,15 +5239,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 33805542956157712, guid: b6c0e7da4eb6f994e814c98df38365d2,
+    - target: {fileID: -927199367670048503, guid: b6c0e7da4eb6f994e814c98df38365d2,
         type: 3}
-      propertyPath: m_LocalRotation.x
-      value: -0.18776278
-      objectReference: {fileID: 0}
-    - target: {fileID: 33805542956157712, guid: b6c0e7da4eb6f994e814c98df38365d2,
-        type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0.12582125
+      propertyPath: m_Name
+      value: MC
       objectReference: {fileID: 0}
     - target: {fileID: 47351823273337735, guid: b6c0e7da4eb6f994e814c98df38365d2,
         type: 3}
@@ -5272,6 +5253,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalRotation.z
       value: 0.0019098859
+      objectReference: {fileID: 0}
+    - target: {fileID: -6057140222963153312, guid: b6c0e7da4eb6f994e814c98df38365d2,
+        type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 08acab98cf6cfef4888588d0dd305f55, type: 2}
+    - target: {fileID: -6057140222963153312, guid: b6c0e7da4eb6f994e814c98df38365d2,
+        type: 3}
+      propertyPath: m_ApplyRootMotion
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 33805542956157712, guid: b6c0e7da4eb6f994e814c98df38365d2,
+        type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0.18776278
+      objectReference: {fileID: 0}
+    - target: {fileID: 33805542956157712, guid: b6c0e7da4eb6f994e814c98df38365d2,
+        type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.12582125
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b6c0e7da4eb6f994e814c98df38365d2, type: 3}
