@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿#define EDITOR_TEST_INPUT     // Comment out when using for production
+
+using System.Collections;
 using System.Collections.Generic;
 using Game.Interactions;
 using UnityEngine;
@@ -15,6 +17,7 @@ namespace Game.Components.Activatables
 
         public bool isOpen;
 
+#if EDITOR_TEST_INPUT
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.Space))
@@ -22,6 +25,7 @@ namespace Game.Components.Activatables
                 Activate(!isOpen);
             }
         }
+#endif
         public int GetInteractionType()
         {
             throw new System.NotImplementedException();
