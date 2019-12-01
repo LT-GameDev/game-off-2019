@@ -1,0 +1,199 @@
+﻿#pragma warning disable 649
+
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using Game.Containers;
+using Game.Managers;
+using Game.Models;
+using Game.Models.Inventory;
+using Game.UI;
+using UnityEngine;
+
+namespace Game
+{
+    public delegate void PausedStateDelegate(bool paused);
+    
+    public class GameManager : MonoBehaviour, IServiceContainer
+    {
+        public event PausedStateDelegate Paused; 
+        
+        [SerializeField] private int mainMenu;
+    
+        [Header("Levels")]
+        [SerializeField] private int level1;
+
+        [Header("Data")] 
+        [SerializeField] private ItemDatabase items;
+
+        [Header("General Purpose UI")] 
+        [SerializeField] private GameObject loadingView;
+        [SerializeField] private InteractionHintView interactionHintView;
+        
+        private ServiceContainer serviceContainer;
+
+        private void Awake()
+        {
+            Application.backgroundLoadingPriority = ThreadPriority.Low;
+            
+            ConfigureServices();
+
+            GetService<GameSceneManager>().LoadSingle(mainMenu);
+
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible   = true;
+        }
+
+        private void OnDestroy()
+        {
+            Cursor.lockState = CursorLockMode.None;
+            Cursor.visible   = true;
+        }
+
+        private void ConfigureServices()
+        {
+            serviceContainer = new ServiceContainer();
+
+            serviceContainer.AddService(new GameSceneManager());
+            serviceContainer.AddService(new PersistenceManager());
+            serviceContainer.AddService(new InventoryManager());
+            serviceContainer.AddService(new PlayerResourceManager());
+            serviceContainer.AddService(new CheckpointManager(this));
+            
+            serviceContainer.AddService(interactionHintView);
+        }
+
+        public void MainMenu()
+        {
+            loadingView.SetActive(true);
+            
+            var sceneManager = GetService<GameSceneManager>();
+                
+            sceneManager.UnloadActiveLevel(OnLevelUnloaded);
+
+
+            void OnLevelUnloaded()
+            {
+                sceneManager.LoadSingle(mainMenu, OnMainMenuOpened);
+            }
+
+            void OnMainMenuOpened()
+            {
+                loadingView.SetActive(false);
+
+                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.visible   = true;
+            }
+        }
+
+        public void StartGame()
+        {
+            loadingView.SetActive(true);
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible   = false;
+
+            GetService<PlayerResourceManager>().PrepareResources();
+            GetService<InventoryManager>().InitializeInventory();
+            GetService<CheckpointManager>().Initialize(new CheckpointData());
+            StartCoroutine(LoadLevelDelayed());
+
+            
+            void OnLoaded()
+            {   
+                loadingView.SetActive(false);
+            }
+
+            IEnumerator LoadLevelDelayed()
+            {
+                yield return new WaitForSeconds(0.3f);
+                GetService<GameSceneManager>().LoadLevel(level1, OnLoaded);
+            }
+        }
+
+        public void ContinueGame()
+        {
+            loadingView.SetActive(true);
+
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible   = false;
+
+            StartCoroutine(LoadLevelDelayed());
+
+
+            void OnPersistentData(SaveData saveData)
+            {
+                GetService<PlayerResourceManager>().PrepareResources();
+                GetService<GameSceneManager>().LoadLevel(saveData.levelId, saveData.levelData, OnLoaded);
+                GetService<InventoryManager>().InitializeInventory(saveData.items.Select(id => items.GetById(id)).ToList());
+                GetService<CheckpointManager>().Initialize(saveData.checkpoints);
+            }
+
+            void OnLoaded()
+            {
+                StartCoroutine(HackContinueCameraBug());
+            }
+
+            IEnumerator LoadLevelDelayed()
+            {
+                yield return new WaitForSeconds(0.3f);
+                GetService<PersistenceManager>().Load(OnPersistentData, StartGame);
+            }
+
+            IEnumerator HackContinueCameraBug()
+            {
+                yield return new WaitForSeconds(1.5f);
+                
+                loadingView.SetActive(false);
+            }
+        }
+
+        public void PauseGame()
+        {
+            Cursor.lockState = CursorLockMode.Confined;
+            Cursor.visible   = true;
+            
+            Paused?.Invoke(true);
+        }
+
+        public void ResumeGame()
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible   = false;
+            
+            Paused?.Invoke(false);
+        }
+
+        public void SaveGame()
+        {
+            // TODO: display save game indicator
+            
+            var levelData   = FindObjectOfType<LevelManager>().GetLevelData();
+            var itemsData   = GetService<InventoryManager>().GetItems();
+            var checkpoints = GetService<CheckpointManager>().GetCheckpoints();
+
+            var saveData = new SaveData();
+                
+            saveData.levelId     = levelData.levelId;
+            saveData.levelData   = levelData.levelData;
+            saveData.checkpoints = checkpoints;
+            saveData.items       = itemsData.Select(item => item.ItemId).ToList();
+
+            GetService<PersistenceManager>().Save(saveData);
+        }
+
+        public void QuitGame()
+        {
+            // Play quit sequence or something, or nothing, idk
+            
+            // Then... quit
+            Application.Quit();
+        }
+
+        public TService GetService<TService>()
+        {
+            return serviceContainer.GetService<TService>();
+        }
+    }
+}
