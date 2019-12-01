@@ -1,0 +1,281 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="74c94128-5fa8-4355-91ed-d651d9706466" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scenes/Level1/Test Level 1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scenes/Level1/Test Level 1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scenes/Level1/Zone1.unity" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scenes/Level1/Zone1.unity" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Assets/Game/Scripts/Components/PlayerController.cs" beforeDir="false" afterPath="$PROJECT_DIR$/Assets/Game/Scripts/Components/PlayerController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/EditorBuildSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/ProjectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" beforeDir="false" afterPath="$PROJECT_DIR$/ProjectSettings/UnityConnectSettings.asset" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/fmod_editor.log" beforeDir="false" afterPath="$PROJECT_DIR$/fmod_editor.log" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/Assets/Demigiant/DOTween/Modules/DOTweenModuleAudio.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Demigiant/DOTween/Modules/DOTweenModuleUnityVersion.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Models/Movement/DefaultMovementContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Managers/PersistenceManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Animations/PlayerAnimationControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Utility/GameWorld.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Scene Management/SceneLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Models/Movement/PlayerMovementContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Prefabs/Cameras/Cameras.prefab" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Interactions/Activatable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Models/SaveData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.3.4/Runtime/Impulse/CinemachineImpulseDefinition.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Movement/WallMovement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Models/Inventory/ItemDatabase.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Movement/DefaultMovement.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.3.4/Runtime/Impulse/CinemachineImpulseSource.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/UI/LoadingScreen.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Interactables/Pickup.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Cameras/PlayerCamera.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Utility/SelectSelectable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Models/Rocks/boulder_00.FBX.meta" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.inputsystem@1.0.0-preview/InputSystem/Actions/InputActionState.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/GameManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scenes/Main Menu.unity" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/ZoneUnloader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Checkpoint.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Models/CheckpointData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/UI/MainMenuView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Cameras/DefaultPlayerCameraTarget.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/ProjectSettings/QualitySettings.asset" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Interactor.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Activatables/Button.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Movement/FaceCameraDirection.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Movement/MovementController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Utility/Extensions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.3.4/Runtime/Behaviours/CinemachineFreeLook.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Managers/InventoryManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Movement/Interface/IMovementLogic.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scenes/Level1/Test Level 1.unity" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Managers/CheckpointManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Animation State Behaviours.meta" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/ZoneLoader.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Managers/PlayerResourceManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.3.4/Runtime/Behaviours/CinemachineVirtualCamera.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Models/LevelData.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Managers/GameSceneManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Animation State Behaviours/AnimationStateEvents.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Demigiant/DOTween/Modules/DOTweenModuleUI.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Demigiant/DOTween/Modules/DOTweenModuleSprite.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Models/Inventory/ItemModel.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Interactions/IInteractable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scenes/Main.unity" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Demigiant/DOTween/Modules/DOTweenModulePhysics2D.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Animations/AnimationControl.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Interactables/BaseInteractable.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Enums/PlayerInteractions.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Plugins/FMOD/src/Runtime/StudioEventEmitter.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/UI/StaminaView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Activatables/OpenedClosedObject.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/UI/SaveIndicator.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Models/Animations/PlayerAnimationContext.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scenes/Level1/Zone1.unity" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Managers/PlayerCameraManager.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/AvoidWallHumping.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Demigiant/DOTween/Modules/DOTweenModulePhysics.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Resources/DOTweenSettings.asset" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Containers/ServiceContainer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/UI/InteractionHintView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/UI/PauseMenuView.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Activatables/DoorOpener.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.3.4/Runtime/Core/CinemachineVirtualCameraBase.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Utility/GizmoDrawer.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Utility/GroundCheck.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Utility/Logger.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/PlayerController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Movement/PlayerMovementController.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Components/Abilities/Dash.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Library/PackageCache/com.unity.cinemachine@2.3.4/Runtime/Core/NoiseSettings.cs" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Demigiant/DOTween/Modules/DOTweenModuleUtils.cs" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/Assets/Game/Scripts/Managers/LevelManager.cs" root0="FORCE_HIGHLIGHTING" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/Views/MainMenuView.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/ViewModels/MainMenuViewModel.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/Views/View.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/Model/Model.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/ViewModels/ViewModel.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/Controllers/MainMenuController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/MainMenuView.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Managers/GameSceneManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/LoadingScreen.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Cameras/PlayerCamera.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Animation State Behaviours/BlockingStateEvents.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Interactables/InteractableType.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Interactions/IInteractable.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Interactables/DummyInteractable.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Activatables/DoorOpener.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Activatables/Button.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Enums/PlayerInteractions.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Models/ItemModel.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Models/Inventory/ItemModel.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Models/Inventory/ItemDatabase.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Managers/InventoryManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Interactables/Pickup.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Models/Movement/PlayerMovementContext.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Animation State Behaviours/AnimationStateEvents.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Models/Animations/PlayerAnimationContext.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Animations/PlayerAnimationControl.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Checkpoints.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Activatables/OpenedClosedObject.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Utility/GroundCheck.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Managers/PlayerResourceManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/SavingIndicator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Models/LevelData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Models/SaveData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Models/CheckpointData.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Managers/CheckpointManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Managers/PlayerCameraManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Managers/PersistenceManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Utility/Extensions.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Checkpoint.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/GameManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/UI/SaveIndicator.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Managers/LevelManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/ZoneLoader.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Interactor.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/ZoneUnloader.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Models/Movement/DefaultMovementContext.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Movement/PlayerMovementController.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Movement/WallMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Managers/SoundManager.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/Movement/DefaultMovement.cs" />
+        <option value="$PROJECT_DIR$/Assets/Game/Scripts/Components/PlayerController.cs" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1T6cP3hg2blfZXeAyFmJ8BA3Ap4" />
+  <component name="PropertiesComponent">
+    <property name="Discover.Launch.Via.Unity" value="true" />
+    <property name="Rider.DefaultBreakpoints.AreToggled" value="true" />
+    <property name="Rider.ProjectViewActivator.IsNotFirstRun" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="vcs.Git" />
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Attach to Unity Editor.Attach to Unity Editor">
+    <configuration name="Attach to Unity Editor &amp; Play" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="UNITY_ATTACH_AND_PLAY" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" />
+      <option name="userSelectedPid" value="false" />
+      <method v="2" />
+    </configuration>
+    <configuration name="Attach to Unity Editor" type="UNITY_DEBUG_RUN_CONFIGURATION" factoryName="Unity Debug" show_console_on_std_err="false" show_console_on_std_out="false" port="50000" address="localhost" pid="8996">
+      <option name="allowRunningInParallel" value="false" />
+      <option name="listenPortForConnections" value="false" />
+      <option name="pid" value="8996" />
+      <option name="userSelectedPid" value="false" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="74c94128-5fa8-4355-91ed-d651d9706466" name="Default Changelist" comment="" />
+      <created>1572783958302</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1572783958302</updated>
+      <workItem from="1572783961408" duration="88000" />
+      <workItem from="1572784135922" duration="7871000" />
+      <workItem from="1572795916483" duration="13107000" />
+      <workItem from="1572812849958" duration="5825000" />
+      <workItem from="1572895353652" duration="8106000" />
+      <workItem from="1572903489512" duration="769000" />
+      <workItem from="1572904274332" duration="5649000" />
+      <workItem from="1573296703849" duration="14769000" />
+      <workItem from="1573317880959" duration="13480000" />
+      <workItem from="1573346305155" duration="3994000" />
+      <workItem from="1573385234038" duration="23383000" />
+      <workItem from="1573495609308" duration="16526000" />
+      <workItem from="1573902837297" duration="10271000" />
+      <workItem from="1573935020277" duration="1068000" />
+      <workItem from="1573993716337" duration="20090000" />
+      <workItem from="1574189652724" duration="3721000" />
+      <workItem from="1574271511496" duration="7005000" />
+      <workItem from="1574354527970" duration="7228000" />
+      <workItem from="1574447811548" duration="4361000" />
+      <workItem from="1574452609482" duration="1223000" />
+      <workItem from="1574526166043" duration="1025000" />
+      <workItem from="1574592512715" duration="7603000" />
+      <workItem from="1574600259451" duration="3000" />
+      <workItem from="1574604250663" duration="1663000" />
+      <workItem from="1574704217199" duration="646000" />
+      <workItem from="1575208399321" duration="1572000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="UnitTestsCoverage.Settings">
+    <option name="coveragePercentColumnWidth" value="150" />
+    <option name="sortOrder" value="DESCENDING" />
+    <option name="sortedColumn" value="1" />
+    <option name="symbolColumnWidth" value="234" />
+    <coverage-tree-state>
+      <expand>
+        <path>
+          <item name="rootNode" type="c53c71d1:RiderDotCoverCoverageTreeModel$RootNode" />
+          <item name="1" type="8b8fad3a:RiderDotCoverCoverageTreeNode" />
+        </path>
+      </expand>
+      <select />
+    </coverage-tree-state>
+  </component>
+  <component name="UnityProjectConfiguration" hasMinimizedUI="true" />
+  <component name="UnityUnitTestConfiguration" currentTestLauncher="EditMode" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="LOCAL_CHANGES_DETAILS_PREVIEW_SHOWN" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <watches-manager>
+      <configuration name="UNITY_DEBUG_RUN_CONFIGURATION">
+        <watch expression="GameWorld.GetGroundPlane()" language="C#" custom="RiderImportsList:" />
+      </configuration>
+    </watches-manager>
+  </component>
+</project>
