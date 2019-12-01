@@ -50,7 +50,7 @@ namespace Game.Components
 
             input.Player.Interact.performed += _ => Interact();
 
-            input.Player.Dash.performed += _ => Dash();
+//            input.Player.Dash.performed += _ => Dash();
         }
 
         private void OnEnable()
